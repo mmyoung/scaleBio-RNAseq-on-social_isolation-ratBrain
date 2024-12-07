@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>ScaleBio scRNA-seq run on rat brain in social isolation study - Notes</title>
+<title>Notes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -78,7 +78,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">ScaleBio scRNA-seq run on rat brain in social isolation study</span>
+    <span class="navbar-title">Notes</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -113,23 +113,7 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Notes</h1>
-</div>
 
-
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
 
 
 <section id="scalebio-run-on-rat-brain-tissues-from-social-isolation-study" class="level1">
@@ -137,9 +121,19 @@ ul.task-list li input[type="checkbox"] {
 <p>Lin Yang</p>
 <section id="project-description" class="level2">
 <h2 class="anchored" data-anchor-id="project-description">Project description</h2>
-<p>3 replicates for female and male rat treated with social isolation and social grouped respectively are included in the experiment. The treatment was exerted from P41-P55. Then, orbitofrontal cortex are dissected from frozen brain tissues and Hang did the nuclei preparation with ScaleBio RNA-seq kit.</p>
+<p>Three replicates for female and male rat treated with social isolation and social grouped respectively are included in the experiment. The treatment was exerted from p41-p55. Then, orbitofrontal cortex are dissected from frozen brain tissues and Hang did the nuclei preparation and library preparation with ScaleBio RNA-seq kit.</p>
 <p>A relavant presentation for this project is available at: <a href="https://uchicago.box.com/s/o20tc5qjuk0ekn20dbln4atk9shx8sb1">presentation</a></p>
+</section>
+<section id="data-processing-steps" class="level2">
+<h2 class="anchored" data-anchor-id="data-processing-steps">Data processing steps</h2>
+<ol type="1">
+<li>data preprocess</li>
+</ol>
+<p>The library sequencing was ran on Illumina sequencer and demultiplexed by i5 barcode by the sequencing core in UofC. Four .fastq files are returned from the core: - Undetermined_S0_L002_I1_001.fastq.gz: i7 index - Undetermined_S0_L002_I2_001.fastq.gz: i5 index - Undetermined_S0_L002_R1_001.fastq.gz: reads1, recording barcode sequences - Undetermined_S0_L002_R2_001.fastq.gz: reads2, recording cDNA sequences</p>
 <p><a href="notes.html">notes</a></p>
+<ol start="2" type="1">
+<li></li>
+</ol>
 
 
 </section>

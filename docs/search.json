@@ -30,15 +30,22 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Notes",
+    "title": "ScaleBio run on rat brain tissues from social isolation study",
     "section": "",
-    "text": "Lin Yang\n\n\n3 replicates for female and male rat treated with social isolation and social grouped respectively are included in the experiment. The treatment was exerted from P41-P55. Then, orbitofrontal cortex are dissected from frozen brain tissues and Hang did the nuclei preparation with ScaleBio RNA-seq kit.\nA relavant presentation for this project is available at: presentation\nnotes"
+    "text": "Lin Yang\n\n\nThree replicates for female and male rat treated with social isolation and social grouped respectively are included in the experiment. The treatment was exerted from p41-p55. Then, orbitofrontal cortex are dissected from frozen brain tissues and Hang did the nuclei preparation and library preparation with ScaleBio RNA-seq kit.\nA relavant presentation for this project is available at: presentation\n\n\n\n\ndata preprocess\n\nThe library sequencing was ran on Illumina sequencer and demultiplexed by i5 barcode by the sequencing core in UofC. Four .fastq files are returned from the core: - Undetermined_S0_L002_I1_001.fastq.gz: i7 index - Undetermined_S0_L002_I2_001.fastq.gz: i5 index - Undetermined_S0_L002_R1_001.fastq.gz: reads1, recording barcode sequences - Undetermined_S0_L002_R2_001.fastq.gz: reads2, recording cDNA sequences\nnotes"
   },
   {
     "objectID": "index.html#project-description",
     "href": "index.html#project-description",
-    "title": "Notes",
+    "title": "ScaleBio run on rat brain tissues from social isolation study",
     "section": "",
-    "text": "3 replicates for female and male rat treated with social isolation and social grouped respectively are included in the experiment. The treatment was exerted from P41-P55. Then, orbitofrontal cortex are dissected from frozen brain tissues and Hang did the nuclei preparation with ScaleBio RNA-seq kit.\nA relavant presentation for this project is available at: presentation\nnotes"
+    "text": "Three replicates for female and male rat treated with social isolation and social grouped respectively are included in the experiment. The treatment was exerted from p41-p55. Then, orbitofrontal cortex are dissected from frozen brain tissues and Hang did the nuclei preparation and library preparation with ScaleBio RNA-seq kit.\nA relavant presentation for this project is available at: presentation"
+  },
+  {
+    "objectID": "index.html#data-processing-steps",
+    "href": "index.html#data-processing-steps",
+    "title": "ScaleBio run on rat brain tissues from social isolation study",
+    "section": "",
+    "text": "data preprocess\n\nThe library sequencing was ran on Illumina sequencer and demultiplexed by i5 barcode by the sequencing core in UofC. Four .fastq files are returned from the core: - Undetermined_S0_L002_I1_001.fastq.gz: i7 index - Undetermined_S0_L002_I2_001.fastq.gz: i5 index - Undetermined_S0_L002_R1_001.fastq.gz: reads1, recording barcode sequences - Undetermined_S0_L002_R2_001.fastq.gz: reads2, recording cDNA sequences\nnotes"
   }
 ]

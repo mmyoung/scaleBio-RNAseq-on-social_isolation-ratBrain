@@ -1,5 +1,4 @@
 ---
-title: "Notes"
 toc: false
 ---
 
@@ -7,11 +6,22 @@ toc: false
 Lin Yang
 
 ## Project description
-3 replicates for female and male rat treated with social isolation and social grouped respectively are included in the experiment. The treatment was exerted from P41-P55. Then, orbitofrontal cortex are dissected from frozen brain tissues and Hang did the nuclei preparation with ScaleBio RNA-seq kit.
+Three replicates for female and male rat treated with social isolation and social grouped respectively are included in the experiment. The treatment was exerted from p41-p55. Then, orbitofrontal cortex are dissected from frozen brain tissues and Hang did the nuclei preparation and library preparation with ScaleBio RNA-seq kit.
 
 A relavant presentation for this project is available at: [presentation](https://uchicago.box.com/s/o20tc5qjuk0ekn20dbln4atk9shx8sb1)
 
+## Data processing steps
+1. data preprocess
+
+The library sequencing was ran on Illumina sequencer and demultiplexed by i5 barcode by the sequencing core in UofC.
+Four .fastq files are returned from the core: 
+- Undetermined_S0_L002_I1_001.fastq.gz: i7 index
+- Undetermined_S0_L002_I2_001.fastq.gz: i5 index
+- Undetermined_S0_L002_R1_001.fastq.gz: reads1, recording barcode sequences
+- Undetermined_S0_L002_R2_001.fastq.gz: reads2, recording cDNA sequences
 
 [notes](notes.html)
+
+2. 
 
 

@@ -6,7 +6,7 @@ project:
   output-dir: ../docs
 
 website:
-  title: "ScaleBio scRNA-seq run on rat brain in social isolation study"
+  title: "Notes"
   navbar:
     left:
       - text: "Home"
