@@ -1,0 +1,20 @@
+##### Required Analysis Parameters
+# Run "nextflow run path/to/ScaleRna --help" for a full list and documentation
+# Also see "nextflow.config" for defaults
+
+##### Inputs
+### Sequencing data input can be either a Illumina sequencer RunFolder (bcl)
+### runFolder : 
+### or a directory with fastq files
+fastqDir : "/project/zhuzhuzhang/lyang/scaleBio_RNA_rat_brain/raw_data"
+
+### A file listing all samples in the analysis with their barcode sequences and sample settings
+samples : /project/zhuzhuzhang/lyang/scaleBio_RNA_rat_brain/samples.csv
+
+
+#### Reference information
+### Path to a .json file defining the reference genome
+## genome : /project/zhuzhuzhang/lyang/scaleBio_RNA_rat_brain/genome.json
+genome : /project/zhuzhuzhang/lyang/ScaleBio_RNA_Rat_brain_B2/genome.json
+#
+libStructure : /project/zhuzhuzhang/lyang/software/ScaleRna/references/libV1.json
