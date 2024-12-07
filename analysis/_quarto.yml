@@ -1,0 +1,24 @@
+project:
+  type: website
+  render:
+    - "*.qmd"
+    - "*.ipynb"
+  output-dir: ../docs
+
+website:
+  title: "ScaleBio scRNA-seq run on rat brain in social isolation study"
+  navbar:
+    left:
+      - text: "Home"
+        href: index.html
+    right:
+      - text: Source code
+        icon: github
+        href: https://github.com/mmyoung/notebook-241114
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    html-math-method: katex

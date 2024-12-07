@@ -1,0 +1,44 @@
+[
+  {
+    "objectID": "notes.html",
+    "href": "notes.html",
+    "title": "Work on sci-RNA-seq barcodes",
+    "section": "",
+    "text": "develop barcode correction and demultiplexing method for sci-RNA-seq, further optimize the whole pipeline\nif the R2 reads pass the polyT tail reaching cDNA sequences, after polyT removal in R2 reads, keep the cDNA sequences for mapping"
+  },
+  {
+    "objectID": "notes.html#goals",
+    "href": "notes.html#goals",
+    "title": "Work on sci-RNA-seq barcodes",
+    "section": "",
+    "text": "develop barcode correction and demultiplexing method for sci-RNA-seq, further optimize the whole pipeline\nif the R2 reads pass the polyT tail reaching cDNA sequences, after polyT removal in R2 reads, keep the cDNA sequences for mapping"
+  },
+  {
+    "objectID": "notes.html#rationale",
+    "href": "notes.html#rationale",
+    "title": "Work on sci-RNA-seq barcodes",
+    "section": "Rationale",
+    "text": "Rationale\n\nSince the barcode detection step in scaleBio pipeline disgards many reads in our recent run, the details of bc_parser tools developed by scaleBio is not open. So I’m trying to write my own barcode extraction and correction tool.\nWhen the sequencing cycle of R2 is long enough to reach cDNA, the scaleBio pipeline will waste the cDNA sequences pass the polyT, so I’m trying to keep that part of reads and use for mapping"
+  },
+  {
+    "objectID": "notes.html#primary-exploration",
+    "href": "notes.html#primary-exploration",
+    "title": "Work on sci-RNA-seq barcodes",
+    "section": "Primary exploration",
+    "text": "Primary exploration\n\nWhat’s the off"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Notes",
+    "section": "",
+    "text": "Lin Yang\n\n\n3 replicates for female and male rat treated with social isolation and social grouped respectively are included in the experiment. The treatment was exerted from P41-P55. Then, orbitofrontal cortex are dissected from frozen brain tissues and Hang did the nuclei preparation with ScaleBio RNA-seq kit.\nA relavant presentation for this project is available at: presentation\nnotes"
+  },
+  {
+    "objectID": "index.html#project-description",
+    "href": "index.html#project-description",
+    "title": "Notes",
+    "section": "",
+    "text": "3 replicates for female and male rat treated with social isolation and social grouped respectively are included in the experiment. The treatment was exerted from P41-P55. Then, orbitofrontal cortex are dissected from frozen brain tissues and Hang did the nuclei preparation with ScaleBio RNA-seq kit.\nA relavant presentation for this project is available at: presentation\nnotes"
+  }
+]

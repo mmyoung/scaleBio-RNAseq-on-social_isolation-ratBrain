@@ -1,0 +1,17 @@
+---
+title: "Notes"
+toc: false
+---
+
+# ScaleBio run on rat brain tissues from social isolation study
+Lin Yang
+
+## Project description
+3 replicates for female and male rat treated with social isolation and social grouped respectively are included in the experiment. The treatment was exerted from P41-P55. Then, orbitofrontal cortex are dissected from frozen brain tissues and Hang did the nuclei preparation with ScaleBio RNA-seq kit.
+
+A relavant presentation for this project is available at: [presentation](https://uchicago.box.com/s/o20tc5qjuk0ekn20dbln4atk9shx8sb1)
+
+
+[notes](notes.html)
+
+
