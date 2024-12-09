@@ -15,10 +15,11 @@ A relavant presentation for this project is available at: [presentation](https:/
 
 The library sequencing was ran on Illumina sequencer and demultiplexed by i5 barcode by the sequencing core in UofC.
 Four .fastq files are returned from the core: 
-* Undetermined_S0_L002_I1_001.fastq.gz: i7 index
-* Undetermined_S0_L002_I2_001.fastq.gz: i5 index
-* Undetermined_S0_L002_R1_001.fastq.gz: reads1, recording barcode sequences
-* Undetermined_S0_L002_R2_001.fastq.gz: reads2, recording cDNA sequences
+
+*Undetermined_S0_L002_I1_001.fastq.gz: i7 index
+*Undetermined_S0_L002_I2_001.fastq.gz: i5 index
+*Undetermined_S0_L002_R1_001.fastq.gz: reads1, recording barcode sequences
+*Undetermined_S0_L002_R2_001.fastq.gz: reads2, recording cDNA sequences
 
 The data preprocessing are implemented with pipeline from ScaleBio with the command:
 
@@ -27,16 +28,18 @@ module load singularity
 nextflow run /project/zhuzhuzhang/lyang/software/ScaleRna/ -params-file runParams.yml -profile singularity --outDir /project/zhuzhuzhang/lyang/scaleBio_RNA_rat_brain/out_mRatBN —-splitFastq true
 ```
 
-inputs:
+**inputs:**
 [runParams.yml](../script/runParams.yml)
 
-outputs:
+**outputs:**
+
 quality control (/project/zhuzhuzhang/lyang/scaleBio_RNA_rat_brain/out_mRatBN/samples)
+
 cell by feature matrix (/project/zhuzhuzhang/lyang/scaleBio_RNA_rat_brain/out_mRatBN/alignment)
 
 2. cell clustering
 
-[Cell clustering was perform in R with Seurat package](cell_clustering.yml)
+[Cell clustering was perform in R with Seurat package](cell_clustering.html)
 
 3. 
 
