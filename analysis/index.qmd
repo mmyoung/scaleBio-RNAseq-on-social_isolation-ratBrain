@@ -46,7 +46,7 @@ cell by feature matrix (/project/zhuzhuzhang/lyang/scaleBio_RNA_rat_brain/out_mR
 
 Marker genes in each cluster are identified with `FindAllmarker` function in Seurat. The top 10 genes are saved and manually compared with the database to annotate the cell types for each cluster.
 
-[**script:**](cluster_annotation.html)
+[**script**](cluster_annotation.html)
 
 **outputs:**
 
@@ -58,11 +58,11 @@ Marker genes in each cluster are identified with `FindAllmarker` function in Seu
 
 The comparison are based on pseudobulk expression of each cell type in each sample.
 
-[**script:**](DEG_analysis_iso_vs_soc.html)
+[**script**](DEG_analysis_iso_vs_soc.html)
 
 **outputs:**
 
-[DEG counts in each cell type between iso and soc groups](../outputs/DEG_FC0.3_counts_barplot_2.pdf)
+[DEG counts in each cell type between iso and soc groups](/outputs/DEG_FC0.3_counts_barplot_2.pdf)
 [gene lists from the DEG analysis and filtered significantly differentially expressed genes with criteria: adjusted.p<0.05 & |log2FC|>0.3](https://drive.google.com/drive/folders/1vyPnJ4aQlVgrAcMo2c_cSNqdUHIiz79B?usp=drive_link)
 
 
@@ -72,7 +72,7 @@ The comparison are based on pseudobulk expression of each cell type in each samp
 
 **outputs:**
 
-[heatmap for log2FC of DEGs in iso&soc comparison](../outputs/isoVSsoc_DEG_logFC_heatmap.pdf)
+[heatmap for log2FC of DEGs in iso&soc comparison](/outputs/isoVSsoc_DEG_logFC_heatmap.pdf)
 [Violin plots of DEG expression in iso and soc groups](https://drive.google.com/file/d/12bkUK9wwWnwjBqQUuQmsxsbzI_nVF-8V/view?usp=drive_link)
 [umap projecting the expression level of DEGs in each cell](https://drive.google.com/file/d/1XUcQwIZnNIeu8fGhCLbE9HwYXYf-RSao/view?usp=drive_link)
 
@@ -81,6 +81,7 @@ The comparison are based on pseudobulk expression of each cell type in each samp
 [**script**](DEG_analysis_F_vs_M.html)
 
 **outputs:**
+
 [gene lists from the DEG analysis and filtered significantly differentially expressed genes with criteria: adjusted.p<0.05 & |log2FC|>0.3](https://drive.google.com/drive/folders/1R0_wEIfob2jwujwN7ijTYtl6ExWU-4Sz?usp=drive_link)
 
 
@@ -110,9 +111,14 @@ violin plot:
 8. genomic track visualization 
 
 steps involved:
-[* split the integrated .bam files into individual cell based on the barcode information](../script/workflow.sh)
-[* To gather the single-cell .bam files to the same folder annotated as the same cell type (not necessarily move to same folder, create softlink works)](../script/run_bam_gather.sh)
-[* Merge the .bam files together for each cell type in each sample](../script/samtools_merge.sh)
-[* Make .bigwig from the merged .bam file](../script/make_bigwig.sh)
-[* make Genome tracks with pygenometrack](../script/soc_FvsM_pygenometrack.sh)
+
+* [split the integrated .bam files into individual cell based on the barcode information](../script/workflow.sh)
+
+* [To gather the single-cell .bam files to the same folder annotated as the same cell type (not necessarily move to same folder, create softlink works)](../script/run_bam_gather.sh)
+
+* [Merge the .bam files together for each cell type in each sample](/script/samtools_merge.sh)
+
+* [Make .bigwig from the merged .bam file](/script/make_bigwig.sh)
+
+* [make Genome tracks with pygenometrack](/script/soc_FvsM_pygenometrack.sh)
 
