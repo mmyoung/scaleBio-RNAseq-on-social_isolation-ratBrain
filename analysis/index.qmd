@@ -29,7 +29,8 @@ nextflow run /project/zhuzhuzhang/lyang/software/ScaleRna/ -params-file runParam
 ```
 
 **inputs:**
-[runParams.yml](../script/runParams.yml)
+
+[runParams.yml](script/runParams.yml)
 
 **outputs:**
 
