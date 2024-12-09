@@ -40,7 +40,7 @@ cell by feature matrix (/project/zhuzhuzhang/lyang/scaleBio_RNA_rat_brain/out_mR
 
 2. cell clustering
 
-[Cell clustering was perform in R with Seurat package](/docs/cell_clustering.html)
+[Cell clustering was perform in R with Seurat package](cell_clustering.html)
 
 3. 
 
