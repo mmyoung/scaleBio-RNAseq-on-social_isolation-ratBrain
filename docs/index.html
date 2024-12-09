@@ -130,7 +130,12 @@ ul.task-list li input[type="checkbox"] {
 <li>data preprocess</li>
 </ol>
 <p>The library sequencing was ran on Illumina sequencer and demultiplexed by i5 barcode by the sequencing core in UofC. Four .fastq files are returned from the core:</p>
-<p><em>Undetermined_S0_L002_I1_001.fastq.gz: i7 index </em>Undetermined_S0_L002_I2_001.fastq.gz: i5 index <em>Undetermined_S0_L002_R1_001.fastq.gz: reads1, recording barcode sequences </em>Undetermined_S0_L002_R2_001.fastq.gz: reads2, recording cDNA sequences</p>
+<ul>
+<li>Undetermined_S0_L002_I1_001.fastq.gz: i7 index</li>
+<li>Undetermined_S0_L002_I2_001.fastq.gz: i5 index</li>
+<li>Undetermined_S0_L002_R1_001.fastq.gz: reads1, recording barcode sequences</li>
+<li>Undetermined_S0_L002_R2_001.fastq.gz: reads2, recording cDNA sequences</li>
+</ul>
 <p>The data preprocessing are implemented with pipeline from ScaleBio with the command:</p>
 <pre><code>module load singularity
 nextflow run /project/zhuzhuzhang/lyang/software/ScaleRna/ -params-file runParams.yml -profile singularity --outDir /project/zhuzhuzhang/lyang/scaleBio_RNA_rat_brain/out_mRatBN —-splitFastq true</code></pre>
@@ -142,7 +147,7 @@ nextflow run /project/zhuzhuzhang/lyang/software/ScaleRna/ -params-file runParam
 <ol start="2" type="1">
 <li>cell clustering</li>
 </ol>
-<p><a href="cell_clustering.html">Cell clustering was perform in R with Seurat package</a></p>
+<p><a href="docs/cell_clustering.html">Cell clustering was perform in R with Seurat package</a></p>
 <ol start="3" type="1">
 <li></li>
 </ol>
