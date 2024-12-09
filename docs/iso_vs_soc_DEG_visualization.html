@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-99.9.9">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Notes - check expression on DEGs</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Notes</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/mmyoung/notebook-241114"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text">Source code</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#merge-the-deg-list" id="toc-merge-the-deg-list" class="nav-link active" data-scroll-target="#merge-the-deg-list">merge the DEG list</a></li>
+  <li><a href="#save-the-fc-data-for-all-celltypes-for-all-degs" id="toc-save-the-fc-data-for-all-celltypes-for-all-degs" class="nav-link" data-scroll-target="#save-the-fc-data-for-all-celltypes-for-all-degs">save the FC data for all celltypes for all DEGs</a>
+  <ul class="collapse">
+  <li><a href="#make-heatmap-for-all-fcs-in-all-celltypes" id="toc-make-heatmap-for-all-fcs-in-all-celltypes" class="nav-link" data-scroll-target="#make-heatmap-for-all-fcs-in-all-celltypes">make heatmap for all FCs in all celltypes</a></li>
+  </ul></li>
+  <li><a href="#make-umaps-for-degs" id="toc-make-umaps-for-degs" class="nav-link" data-scroll-target="#make-umaps-for-degs">make umaps for DEGs</a></li>
+  <li><a href="#make-heatmap-for-degs" id="toc-make-heatmap-for-degs" class="nav-link" data-scroll-target="#make-heatmap-for-degs">make heatmap for DEGs</a></li>
+  <li><a href="#go-analysis-for-degs" id="toc-go-analysis-for-degs" class="nav-link" data-scroll-target="#go-analysis-for-degs">GO analysis for DEGs</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">check expression on DEGs</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div id="c918651d-4fa0-4afc-9632-787aee36c0e5" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>library(Seurat)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>library(ggplot2)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>library(dplyr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>library(patchwork)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>library(stringr)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>library(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="eee908d1-fec1-4b78-a731-7f1a967f07e6" class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">## https://drive.google.com/file/d/16Jq6w_KAWwI2rBN7SYBw-7bm5qwVoFyt/view?usp=drive_link</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>seu_obj <span class="op">&lt;-</span> readRDS(<span class="bu">file</span><span class="op">=</span><span class="st">"/project/zhuzhuzhang/lyang/scaleBio_RNA_rat_brain/out_mRatBN/merged_seurat_obj_celltype_annotated_2.rds"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">## https://drive.google.com/file/d/1Q7HV0PAfjac-19xNM455wGNN6zvkOyx4/view?usp=drive_link</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>pseudo_seu <span class="op">&lt;-</span> readRDS(<span class="bu">file</span> <span class="op">=</span> <span class="st">"./pseudo_Seu_obj_2.rds"</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">## https://drive.google.com/file/d/1XbDy0A_rLt-kTDQvtqyCCGJ__qxdym7e/view?usp=drive_link</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>pseudo_de <span class="op">&lt;-</span> readRDS(<span class="bu">file</span> <span class="op">=</span> <span class="st">"./pseudo_DESeq2_DEG_2.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="2f4f9a22-698a-42f5-bd79-a52234b6c592" class="cell" data-execution_count="75">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Idents(seu_obj) <span class="op">&lt;-</span> <span class="st">"celltype"</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>gene_ls <span class="op">&lt;-</span> c(<span class="st">"Slc17a7"</span>, <span class="co">## Exc</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Prex1"</span>,<span class="st">"Enpp2"</span>,<span class="st">"Rfx3"</span>, <span class="co">## L2/3 IT</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Rorb"</span>, <span class="st">"Kcnh5"</span>,<span class="st">"Cadps2"</span>, <span class="co">## L4 IT</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Ptgfran"</span>,<span class="st">"Il1rapl2"</span>, <span class="co">## L5 IT</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Mgat"</span>,<span class="st">"Rspo2"</span>,<span class="st">"Kcnab1"</span>, <span class="co">## L6 IT</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Vwc2l"</span>,<span class="st">"Nxph1"</span>,<span class="co">## L5/6 NP</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Foxp2"</span>,<span class="st">"Tle4"</span>,<span class="st">"Syt6"</span>, <span class="co">## L6 CT</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Vat1l"</span>,<span class="st">"Etv1"</span>,<span class="st">"Tcerg1l"</span>, <span class="co">## L5 ET</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Fgf13"</span>,<span class="st">"Lamp5"</span>,<span class="st">"Vip"</span>, <span class="st">"Npas3"</span>,<span class="co">## CGE-Inh</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Sst"</span>, <span class="st">"Grin3a"</span>, <span class="co">## Sst-Inh</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Cemip"</span>,<span class="st">"Man1c1"</span>, <span class="co">## Pvalb-Inh</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Slc1a3"</span>,<span class="st">"Atp1a2"</span>, <span class="co">## ASC</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Mbp"</span>,<span class="st">"Mobp"</span>,<span class="st">"Plp1"</span>,<span class="co">## ODC</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Gfra1"</span>,<span class="st">"Shisa6"</span>, <span class="co">## OPC</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Flt1"</span>,<span class="st">"Cyyr1"</span>, <span class="co">## Endo</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Pbx3"</span>,<span class="st">"Rgs9"</span> <span class="co">## STR</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>             </span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>data_df <span class="op">&lt;-</span> cbind(sample_name<span class="op">=</span>colnames(seu_obj<span class="op">@</span>assays$SCT$data),</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>      <span class="im">as</span>.data.frame(t(<span class="im">as</span>.matrix(seu_obj<span class="op">@</span>assays$SCT$data[gene_ls[gene_ls <span class="op">%</span><span class="kw">in</span><span class="op">%</span> row.names(seu_obj<span class="op">@</span>assays$SCT$data)],]))))</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>anno <span class="op">&lt;-</span> seu_obj<span class="op">@</span>meta.data <span class="op">%&gt;%</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>        mutate(sample_name<span class="op">=</span>row.names(.)) <span class="op">%&gt;%</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>        mutate(celltype_id<span class="op">=</span>celltype) <span class="op">%&gt;%</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>        mutate(celltype_label<span class="op">=</span>celltype)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="b87c5ad8-d542-4e3e-9400-d2ed09a54e64" class="cell" data-execution_count="77">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>options(<span class="bu">repr</span>.plot.width <span class="op">=</span> <span class="dv">10</span>, <span class="bu">repr</span>.plot.height <span class="op">=</span> <span class="dv">8</span>, <span class="bu">repr</span>.plot.res <span class="op">=</span> <span class="dv">300</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>p <span class="op">&lt;-</span> sample_bar_plot(data_df, </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                anno, </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                genes <span class="op">=</span> gene_ls[gene_ls <span class="op">%</span><span class="kw">in</span><span class="op">%</span> row.names(seu_obj<span class="op">@</span>assays$SCT$data)], </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                grouping <span class="op">=</span> <span class="st">"celltype"</span>, </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                log_scale <span class="op">=</span> FALSE,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                font_size <span class="op">=</span> <span class="dv">9</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                label_type <span class="op">=</span> <span class="st">"angle"</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="iso_vs_soc_DEG_visualization_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="92390b0f-4caf-4b67-9b7f-d377641cd0bc" class="cell" data-execution_count="78">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>group_violin_plot(data_df, </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                  anno, </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                  genes <span class="op">=</span> gene_ls[gene_ls <span class="op">%</span><span class="kw">in</span><span class="op">%</span> row.names(seu_obj<span class="op">@</span>assays$SCT$data)], </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                  grouping <span class="op">=</span> <span class="st">"celltype"</span>, </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                  log_scale <span class="op">=</span> FALSE,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                  font_size <span class="op">=</span> <span class="dv">7</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                  rotate_counts <span class="op">=</span> TRUE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="iso_vs_soc_DEG_visualization_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="c5b66bfe-a1b1-4d7e-a779-762111c6e3b1" class="cell" data-execution_count="73">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>head(pseudo_seu)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>A data.frame: 10 × 4</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th" scope="col">orig.ident</th>
+<th data-quarto-table-cell-role="th" scope="col">sample_name</th>
+<th data-quarto-table-cell-role="th" scope="col">celltype</th>
+<th data-quarto-table-cell-role="th" scope="col">celltype.group</th>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">iso-F-1_L2/3 IT</td>
+<td>iso-F-1_L2/3 IT</td>
+<td>iso-F-1</td>
+<td>L2/3 IT</td>
+<td>L2/3 IT_iso</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th" scope="row">iso-F-1_L4 IT</td>
+<td>iso-F-1_L4 IT</td>
+<td>iso-F-1</td>
+<td>L4 IT</td>
+<td>L4 IT_iso</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">iso-F-1_L5 IT</td>
+<td>iso-F-1_L5 IT</td>
+<td>iso-F-1</td>
+<td>L5 IT</td>
+<td>L5 IT_iso</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th" scope="row">iso-F-1_L6 IT</td>
+<td>iso-F-1_L6 IT</td>
+<td>iso-F-1</td>
+<td>L6 IT</td>
+<td>L6 IT_iso</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">iso-F-1_L5/6 NP</td>
+<td>iso-F-1_L5/6 NP</td>
+<td>iso-F-1</td>
+<td>L5/6 NP</td>
+<td>L5/6 NP_iso</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th" scope="row">iso-F-1_L6 CT</td>
+<td>iso-F-1_L6 CT</td>
+<td>iso-F-1</td>
+<td>L6 CT</td>
+<td>L6 CT_iso</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">iso-F-1_L5 ET</td>
+<td>iso-F-1_L5 ET</td>
+<td>iso-F-1</td>
+<td>L5 ET</td>
+<td>L5 ET_iso</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th" scope="row">iso-F-1_CGE-Inh</td>
+<td>iso-F-1_CGE-Inh</td>
+<td>iso-F-1</td>
+<td>CGE-Inh</td>
+<td>CGE-Inh_iso</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">iso-F-1_Sst-Inh</td>
+<td>iso-F-1_Sst-Inh</td>
+<td>iso-F-1</td>
+<td>Sst-Inh</td>
+<td>Sst-Inh_iso</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th" scope="row">iso-F-1_Pvalb-Inh</td>
+<td>iso-F-1_Pvalb-Inh</td>
+<td>iso-F-1</td>
+<td>Pvalb-Inh</td>
+<td>Pvalb-Inh_iso</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="815fa74d-538b-4365-9865-79385d3195e5" class="cell" data-execution_count="143">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pseudo_de <span class="op">&lt;-</span> pseudo_de[<span class="op">-</span><span class="dv">16</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="69f54868-3d31-44bc-b839-ee7e02f258e5" class="cell" data-scrolled="true" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>library(tidyr)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>library(ComplexHeatmap)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>library(tibble)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>library(circlize)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: grid
+
+========================================
+ComplexHeatmap version 2.18.0
+Bioconductor page: http://bioconductor.org/packages/ComplexHeatmap/
+Github page: https://github.com/jokergoo/ComplexHeatmap
+Documentation: http://jokergoo.github.io/ComplexHeatmap-reference
+
+If you use it in published research, please cite either one:
+- Gu, Z. Complex Heatmap Visualization. iMeta 2022.
+- Gu, Z. Complex heatmaps reveal patterns and correlations in multidimensional 
+    genomic data. Bioinformatics 2016.
+
+
+The new InteractiveComplexHeatmap package can directly export static 
+complex heatmaps into an interactive Shiny app with zero effort. Have a try!
+
+This message can be suppressed by:
+  suppressPackageStartupMessages(library(ComplexHeatmap))
+========================================
+
+
+========================================
+circlize version 0.4.16
+CRAN page: https://cran.r-project.org/package=circlize
+Github page: https://github.com/jokergoo/circlize
+Documentation: https://jokergoo.github.io/circlize_book/book/
+
+If you use it in published research, please cite:
+Gu, Z. circlize implements and enhances circular visualization
+  in R. Bioinformatics 2014.
+
+This message can be suppressed by:
+  suppressPackageStartupMessages(library(circlize))
+========================================
+
+</code></pre>
+</div>
+</div>
+<section id="merge-the-deg-list" class="level2">
+<h2 class="anchored" data-anchor-id="merge-the-deg-list">merge the DEG list</h2>
+<div id="639aa441-8647-47f8-8eb3-6f5883024856" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>DEG_ls<span class="op">&lt;-</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>lapply(seq_len(length(names(pseudo_de))), function(x) {</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="bu">sum</span>(pseudo_de[[x]]$p_val_adj <span class="op">&lt;</span> <span class="fl">0.05</span> <span class="op">&amp;</span> <span class="bu">abs</span>(pseudo_de[[x]]$avg_log2FC) <span class="op">&gt;</span> <span class="fl">0.3</span>,na.rm <span class="op">=</span> TRUE) <span class="op">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>        pseudo_de[[x]] <span class="op">%&gt;%</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>            <span class="bu">filter</span>(p_val_adj <span class="op">&lt;</span> <span class="fl">0.05</span>, <span class="bu">abs</span>(avg_log2FC) <span class="op">&gt;</span> <span class="fl">0.3</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>names(DEG_ls) <span class="op">&lt;-</span> names(pseudo_de)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>DEG_ls <span class="op">&lt;-</span> DEG_ls[<span class="op">!</span>sapply(DEG_ls,<span class="kw">is</span>.null)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="2a29f110-704f-413d-8258-4a8e29437fdf" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>DEG_merged<span class="op">&lt;-</span> do.call(rbind,Map(cbind, DEG_ls, new_clumn <span class="op">=</span> names(DEG_ls))) <span class="op">%&gt;%</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  mutate(gene <span class="op">=</span> str_split(row.names(.), <span class="st">"</span><span class="ch">\\</span><span class="st">."</span>, simplify <span class="op">=</span> TRUE)[, <span class="dv">2</span>]) <span class="op">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">filter</span>(gene <span class="op">!=</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="5a524271-c037-4ed5-a8ec-18c6b3612c57" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>DEG_merged[<span class="dv">1</span>:<span class="dv">3</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>A data.frame: 3 × 7</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th" scope="col">p_val</th>
+<th data-quarto-table-cell-role="th" scope="col">avg_log2FC</th>
+<th data-quarto-table-cell-role="th" scope="col">pct.1</th>
+<th data-quarto-table-cell-role="th" scope="col">pct.2</th>
+<th data-quarto-table-cell-role="th" scope="col">p_val_adj</th>
+<th data-quarto-table-cell-role="th" scope="col">new_clumn</th>
+<th data-quarto-table-cell-role="th" scope="col">gene</th>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">L2/3 IT.LOC102548918</td>
+<td>2.089267e-15</td>
+<td>-1.3097989</td>
+<td>1</td>
+<td>1</td>
+<td>5.556822e-11</td>
+<td>L2/3 IT</td>
+<td>LOC102548918</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th" scope="row">L2/3 IT.Iqgap2</td>
+<td>1.322525e-12</td>
+<td>-0.7579870</td>
+<td>1</td>
+<td>1</td>
+<td>3.517520e-08</td>
+<td>L2/3 IT</td>
+<td>Iqgap2</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" scope="row">L2/3 IT.Pdzd2</td>
+<td>2.604076e-12</td>
+<td>-0.8742842</td>
+<td>1</td>
+<td>1</td>
+<td>6.926060e-08</td>
+<td>L2/3 IT</td>
+<td>Pdzd2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="f4071e11-bb6f-43f3-bb47-93ce754503c2" class="cell" data-execution_count="130">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>DEG_up_ls<span class="op">&lt;-</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>lapply(seq_len(length(names(pseudo_de))), function(x) {</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="bu">sum</span>(pseudo_de[[x]]$p_val_adj <span class="op">&lt;</span> <span class="fl">0.05</span> <span class="op">&amp;</span> pseudo_de[[x]]$avg_log2FC <span class="op">&gt;</span> <span class="fl">0.3</span>,na.rm <span class="op">=</span> TRUE) <span class="op">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>        pseudo_de[[x]] <span class="op">%&gt;%</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>            <span class="bu">filter</span>(p_val_adj <span class="op">&lt;</span> <span class="fl">0.05</span>, avg_log2FC <span class="op">&gt;</span> <span class="fl">0.3</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>names(DEG_up_ls) <span class="op">&lt;-</span> names(pseudo_de)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>DEG_up_ls <span class="op">&lt;-</span> DEG_up_ls[<span class="op">!</span>sapply(DEG_up_ls,<span class="kw">is</span>.null)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="a8b67ac1-d608-4bec-a23f-2edf6b6bc123" class="cell" data-execution_count="88">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>DEG_down_ls<span class="op">&lt;-</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>lapply(seq_len(length(names(pseudo_de))), function(x) {</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="bu">sum</span>(pseudo_de[[x]]$p_val_adj <span class="op">&lt;</span> <span class="fl">0.05</span> <span class="op">&amp;</span> pseudo_de[[x]]$avg_log2FC <span class="op">&lt;</span> (<span class="op">-</span><span class="fl">0.3</span>),na.rm <span class="op">=</span> TRUE) <span class="op">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>        pseudo_de[[x]] <span class="op">%&gt;%</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>            <span class="bu">filter</span>(p_val_adj <span class="op">&lt;</span> <span class="fl">0.05</span>, avg_log2FC <span class="op">&lt;</span> (<span class="op">-</span><span class="fl">0.3</span>))</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>names(DEG_down_ls) <span class="op">&lt;-</span> names(pseudo_de)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>DEG_down_ls <span class="op">&lt;-</span> DEG_down_ls[<span class="op">!</span>sapply(DEG_down_ls,<span class="kw">is</span>.null)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="e58086ab-8392-4fc3-b7db-115bd9f6a0bc" class="cell" data-execution_count="89">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>names(DEG_down_ls)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class="list-inline"><li>'L2/3 IT'</li><li>'L4 IT'</li><li>'L5 IT'</li><li>'L6 IT'</li><li>'L6 CT'</li><li>'L5 ET'</li><li>'CGE-Inh'</li><li>'OPC'</li></ol>
+</div>
+</div>
+</section>
+<section id="save-the-fc-data-for-all-celltypes-for-all-degs" class="level2">
+<h2 class="anchored" data-anchor-id="save-the-fc-data-for-all-celltypes-for-all-degs">save the FC data for all celltypes for all DEGs</h2>
+<div id="68103529-114a-4225-ad9b-729614f696ca" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">## gather fold change information together</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>DEG_ls<span class="op">&lt;-</span> </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>lapply(seq_len(length(names(pseudo_de))), function(x) {</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>        pseudo_de[[x]] <span class="op">%&gt;%</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>            <span class="bu">filter</span>(row.names(.) <span class="op">%</span><span class="kw">in</span><span class="op">%</span> unique(isoVSsoc_DEG_ls$gene))</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>names(DEG_ls) <span class="op">&lt;-</span> names(pseudo_de)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>all_DEG_gene <span class="op">&lt;-</span> do.call(rbind,Map(cbind, DEG_ls, new_clumn <span class="op">=</span> names(DEG_ls))) <span class="op">%&gt;%</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  mutate(gene <span class="op">=</span> str_split(row.names(.), <span class="st">"</span><span class="ch">\\</span><span class="st">."</span>, simplify <span class="op">=</span> TRUE)[, <span class="dv">2</span>]) <span class="op">%&gt;%</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">filter</span>(gene <span class="op">!=</span> <span class="st">""</span>)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>all_DEG_gene <span class="op">%&gt;%</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    select(new_clumn,avg_log2FC,gene) <span class="op">%&gt;%</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    tidyr::pivot_wider(names_from <span class="op">=</span> new_clumn, values_from <span class="op">=</span> avg_log2FC) <span class="op">%&gt;%</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>    tibble::column_to_rownames(var<span class="op">=</span><span class="st">"gene"</span>) <span class="op">%&gt;%</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>    write.table(<span class="bu">file</span><span class="op">=</span><span class="st">"./isoVSsoc_DEG_FC_celltype_matrix.tsv"</span>,quote<span class="op">=</span>F,sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>,row.names<span class="op">=</span>T)</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>all_DEG_gene <span class="op">%&gt;%</span></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    select(new_clumn,p_val_adj,gene) <span class="op">%&gt;%</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>    tidyr::pivot_wider(names_from <span class="op">=</span> new_clumn, values_from <span class="op">=</span> p_val_adj) <span class="op">%&gt;%</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>    tibble::column_to_rownames(var<span class="op">=</span><span class="st">"gene"</span>) <span class="op">%&gt;%</span></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>    write.table(<span class="bu">file</span><span class="op">=</span><span class="st">"./isoVSsoc_DEG_adjP_celltype_matrix.tsv"</span>,quote<span class="op">=</span>F,sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>,row.names<span class="op">=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="make-heatmap-for-all-fcs-in-all-celltypes" class="level3">
+<h3 class="anchored" data-anchor-id="make-heatmap-for-all-fcs-in-all-celltypes">make heatmap for all FCs in all celltypes</h3>
+<div id="38c77261-d29c-43c5-a470-5d27226a7e5d" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>isoVSsoc_DEG_FC <span class="op">&lt;-</span> read.table(<span class="st">"./isoVSsoc_DEG_FC_celltype_matrix.tsv"</span>, header<span class="op">=</span>T,sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>,row.names<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>isoVSsoc_DEG_P <span class="op">&lt;-</span> read.table(<span class="st">"./isoVSsoc_DEG_adjP_celltype_matrix.tsv"</span>, header<span class="op">=</span>T,sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>,row.names<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="6021e824-a2c0-49db-9a07-74b76ce005f0" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>rm.neg<span class="op">&lt;-</span>plyr::colwise(function(x){</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span>(ifelse(x <span class="op">&lt;</span> <span class="fl">0.0001</span>,<span class="st">"****"</span>, </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                ifelse(x<span class="op">&lt;</span><span class="fl">0.001</span>,<span class="st">"***"</span>,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>                      ifelse(x<span class="op">&lt;</span><span class="fl">0.01</span>,<span class="st">"**"</span>,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>                            ifelse(x<span class="op">&lt;</span><span class="fl">0.05</span>,<span class="st">"*"</span>,<span class="st">""</span>)))))})</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>p_sign_df <span class="op">&lt;-</span> rm.neg(isoVSsoc_DEG_P)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>row.names(p_sign_df) <span class="op">&lt;-</span> row.names(isoVSsoc_DEG_P)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>colnames(p_sign_df) <span class="op">&lt;-</span> c(<span class="st">"L2/3 IT"</span>, <span class="st">"L4 IT"</span>, <span class="st">"L5 IT"</span>, <span class="st">"L6 IT"</span>, <span class="st">"L5/6 NP"</span>, <span class="st">"L6 CT"</span>, <span class="st">"L5 ET"</span>, <span class="st">"CGE-Inh"</span>, <span class="st">"Sst-Inh"</span>, <span class="st">"Pvalb-Inh"</span>, <span class="st">"ASC"</span>, <span class="st">"ODC"</span>, <span class="st">"OPC"</span>, <span class="st">"Endo"</span>)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>colnames(isoVSsoc_DEG_FC) <span class="op">&lt;-</span> c(<span class="st">"L2/3 IT"</span>, <span class="st">"L4 IT"</span>, <span class="st">"L5 IT"</span>, <span class="st">"L6 IT"</span>, <span class="st">"L5/6 NP"</span>, <span class="st">"L6 CT"</span>, <span class="st">"L5 ET"</span>, <span class="st">"CGE-Inh"</span>, <span class="st">"Sst-Inh"</span>, <span class="st">"Pvalb-Inh"</span>, <span class="st">"ASC"</span>, <span class="st">"ODC"</span>, <span class="st">"OPC"</span>, <span class="st">"Endo"</span>)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>p_sign_df[<span class="kw">is</span>.na(p_sign_df)] <span class="op">&lt;-</span> <span class="st">""</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>p_sign_df[<span class="bu">abs</span>(isoVSsoc_DEG_FC)<span class="op">&lt;</span><span class="fl">0.3</span>] <span class="op">&lt;-</span> <span class="st">""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="69983a98-902e-4f31-addb-bb2569f33c17" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>summary(isoVSsoc_DEG_FC)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>    L2/3 IT             L4 IT              L5 IT             L6 IT          
+ Min.   :-1.30980   Min.   :-1.09734   Min.   :-0.8480   Min.   :-1.111527  
+ 1st Qu.:-0.63743   1st Qu.:-0.38195   1st Qu.:-0.2615   1st Qu.:-0.569098  
+ Median :-0.51781   Median :-0.17385   Median :-0.1304   Median :-0.424604  
+ Mean   :-0.34255   Mean   :-0.08588   Mean   :-0.0397   Mean   :-0.336213  
+ 3rd Qu.: 0.07853   3rd Qu.: 0.21437   3rd Qu.: 0.2450   3rd Qu.:-0.007744  
+ Max.   : 0.79294   Max.   : 0.86125   Max.   : 0.8612   Max.   : 0.451747  
+    L5/6 NP             L6 CT             L5 ET             CGE-Inh       
+ Min.   :-1.00000   Min.   :-1.1010   Min.   :-0.82254   Min.   :-0.7605  
+ 1st Qu.:-0.43982   1st Qu.:-0.6284   1st Qu.:-0.49044   1st Qu.:-0.4358  
+ Median :-0.25787   Median :-0.4191   Median :-0.25448   Median :-0.2937  
+ Mean   :-0.24905   Mean   :-0.3686   Mean   :-0.18328   Mean   :-0.2709  
+ 3rd Qu.:-0.08553   3rd Qu.:-0.0889   3rd Qu.: 0.08577   3rd Qu.:-0.1583  
+ Max.   : 0.71543   Max.   : 0.4759   Max.   : 0.77626   Max.   : 1.0000  
+    Sst-Inh          Pvalb-Inh             ASC               ODC          
+ Min.   :-1.1043   Min.   :-0.65208   Min.   :-1.3445   Min.   :-1.25096  
+ 1st Qu.:-0.4386   1st Qu.:-0.36391   1st Qu.:-0.7263   1st Qu.:-0.71387  
+ Median :-0.3561   Median :-0.29677   Median :-0.5488   Median :-0.46949  
+ Mean   :-0.3346   Mean   :-0.28294   Mean   :-0.4687   Mean   :-0.40103  
+ 3rd Qu.:-0.2346   3rd Qu.:-0.21554   3rd Qu.:-0.1787   3rd Qu.:-0.09184  
+ Max.   : 0.4150   Max.   : 0.05965   Max.   : 1.1043   Max.   : 0.62409  
+      OPC               Endo         
+ Min.   :-1.6229   Min.   :-2.00000  
+ 1st Qu.:-0.9650   1st Qu.:-0.52195  
+ Median :-0.7452   Median :-0.28063  
+ Mean   :-0.7249   Mean   :-0.31877  
+ 3rd Qu.:-0.4900   3rd Qu.: 0.01543  
+ Max.   : 0.3806   Max.   : 1.28011  </code></pre>
+</div>
+</div>
+<div id="5afaa94a-b1ce-42bc-8671-284bc3e11028" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>col_fun <span class="op">=</span> colorRamp2(c(<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>), c(<span class="st">"#0077b6"</span>, <span class="st">"white"</span>, <span class="st">"#e63946"</span>))</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> Heatmap(isoVSsoc_DEG_FC, name <span class="op">=</span> <span class="st">"iso/soc</span><span class="ch">\n</span><span class="st">avg_logFC"</span>, col <span class="op">=</span> col_fun,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>        cluster_columns <span class="op">=</span> F,</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>        show_row_dend <span class="op">=</span> F,</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>        heatmap_legend_param <span class="op">=</span> <span class="bu">list</span>(</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>            legend_direction <span class="op">=</span> <span class="st">"horizontal"</span>, </span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>        legend_width <span class="op">=</span> unit(<span class="dv">6</span>, <span class="st">"cm"</span>)),</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>        row_names_gp <span class="op">=</span> grid::gpar(fontsize <span class="op">=</span> <span class="dv">6</span>),</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>        column_names_gp <span class="op">=</span> grid::gpar(fontsize <span class="op">=</span> <span class="dv">6</span>),</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>        cell_fun <span class="op">=</span> function(j, i, x, y, width, height, fill) {</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>            gb <span class="op">=</span> textGrob(<span class="st">"*"</span>)</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>            gb_w <span class="op">=</span> convertWidth(grobWidth(gb), <span class="st">"mm"</span>)</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>            gb_h <span class="op">=</span> convertHeight(grobHeight(gb), <span class="st">"mm"</span>)</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>            grid.text(sprintf(<span class="st">"</span><span class="sc">%s</span><span class="st">"</span>, p_sign_df[i, j]), x, y <span class="op">-</span> gb_h<span class="op">*</span><span class="fl">0.5</span> <span class="op">+</span> gb_w<span class="op">*</span><span class="fl">0.4</span>, gp <span class="op">=</span> gpar(fontsize <span class="op">=</span> <span class="dv">10</span>))</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>lgd1 <span class="op">=</span> Legend(labels<span class="op">=</span>c(<span class="st">"&lt;0.0001"</span>,<span class="st">"&lt;0.001"</span>,<span class="st">"&lt;0.01"</span>,<span class="st">"&lt;0.05"</span>),pch <span class="op">=</span> c(<span class="st">"**** "</span>,<span class="st">"*** "</span>,<span class="st">"** "</span>,<span class="st">"* "</span>), title <span class="op">=</span> <span class="st">"adj.p"</span>, <span class="bu">type</span> <span class="op">=</span> <span class="st">"points"</span>, </span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>    background <span class="op">=</span> <span class="st">"white"</span>,direction <span class="op">=</span> <span class="st">"horizontal"</span>)</span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>lgd2 <span class="op">=</span> Legend(labels<span class="op">=</span><span class="st">"gene not detected"</span>,legend_gp <span class="op">=</span> gpar(fill <span class="op">=</span> <span class="st">"grey"</span>), title <span class="op">=</span> <span class="st">"NA"</span>)</span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>pdf(<span class="st">"isoVSsoc_DEG_logFC_heatmap.pdf"</span>,width<span class="op">=</span><span class="dv">5</span>,height<span class="op">=</span><span class="dv">7</span>)</span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>draw(p,annotation_legend_list <span class="op">=</span> <span class="bu">list</span>(lgd1),heatmap_legend_side<span class="op">=</span><span class="st">"bottom"</span>, annotation_legend_side<span class="op">=</span><span class="st">"right"</span>,</span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>           legend_grouping <span class="op">=</span> <span class="st">"original"</span>)</span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>dev.off()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning message:
+“The input is a data frame-like object, convert it to a matrix.”</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<strong>png:</strong> 2
+</div>
+</div>
+<div id="697d4581-19c9-4c54-b331-bc883e681b1e" class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>isoVSsoc_DEG_ls$P_label<span class="op">&lt;-</span> </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    symnum(isoVSsoc_DEG_ls$p_val_adj, cutpoints <span class="op">=</span> c(<span class="dv">0</span>, <span class="fl">0.0001</span>, <span class="fl">0.001</span>, <span class="fl">0.01</span>, <span class="fl">0.05</span>,<span class="dv">1</span>),</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>       symbols <span class="op">=</span> c(<span class="st">"****"</span>, <span class="st">"***"</span>, <span class="st">"**"</span>, <span class="st">"*"</span>, <span class="st">"ns"</span>),</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>       abbr.colnames <span class="op">=</span> FALSE, na <span class="op">=</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="50875588-af16-4b10-a57e-252cc8f957a6" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>Idents(seu_obj) <span class="op">&lt;-</span> <span class="st">"celltype"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="085f157c-cc18-479c-b96c-e1b4f28bb287" class="cell" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>make_vlnplot <span class="op">&lt;-</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>function(genes<span class="op">=</span>NULL,celltype<span class="op">=</span>NULL,label_df<span class="op">=</span>NULL){</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    VlnPlot(seu_obj, </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>        features <span class="op">=</span> genes,</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>        idents<span class="op">=</span>celltype,</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>        split.by <span class="op">=</span> <span class="st">"group"</span>,</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>        pt.size <span class="op">=</span> <span class="fl">0.0</span>,</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>        <span class="co">#split.plot = T,</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>        log<span class="op">=</span>FALSE)<span class="op">&amp;</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>        scale_fill_manual(values<span class="op">=</span>c(<span class="st">"iso"</span><span class="op">=</span><span class="st">"#e31a1c"</span>,<span class="st">"soc"</span><span class="op">=</span><span class="st">"#ffda79"</span>)) <span class="op">&amp;</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>        annotate(<span class="st">"text"</span>,x<span class="op">=</span>label_df$new_clumn,y<span class="op">=</span>Inf,label<span class="op">=</span>label_df$P_label,vjust<span class="op">=</span><span class="dv">1</span>,hjust<span class="op">=</span><span class="fl">0.5</span>) <span class="op">&amp;</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>        <span class="co">#stat_summary(fun = median, fun.min = median, fun.max = median,</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>        <span class="co">#         geom = "crossbar", </span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>        <span class="co">#         width = 0.6,</span></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>        <span class="co">#         position = position_dodge(width = .70)) &amp;</span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>                xlab(<span class="st">""</span>) <span class="op">&amp;</span></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>                ylab(<span class="st">"Gene Expression"</span>) <span class="op">&amp;</span></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>          stat_summary(fun <span class="op">=</span> <span class="st">"mean"</span>,</span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>               geom <span class="op">=</span> <span class="st">"point"</span>,</span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>               color <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>               position <span class="op">=</span> position_dodge(width <span class="op">=</span> <span class="fl">.90</span>)) <span class="op">&amp;</span></span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>    labs(caption <span class="op">=</span> paste(<span class="st">"adj.p: "</span>,<span class="st">"**** &lt;0.0001"</span>,<span class="st">"*** &lt;0.001"</span>,<span class="st">"** &lt;0.01"</span>,<span class="st">"* &lt;0.05"</span>)) <span class="op">&amp;</span></span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>    guides(fill <span class="op">=</span> guide_legend(override.aes <span class="op">=</span> <span class="bu">list</span>(linetype <span class="op">=</span> <span class="dv">0</span>,size <span class="op">=</span> <span class="dv">0</span>)),</span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>               color <span class="op">=</span> guide_legend(override.aes <span class="op">=</span> <span class="bu">list</span>(linetype <span class="op">=</span> <span class="dv">0</span>,size<span class="op">=</span><span class="dv">0</span>)))</span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="380c4590-5e90-4adb-861a-0fa7edb48984" class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>gene_for_plot <span class="op">&lt;-</span> read.csv(<span class="st">"./genes_for_vlnplot.csv"</span>,header<span class="op">=</span>F,sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="d3b4cda8-5c2a-493a-b18f-42b2b6375955" class="cell" data-scrolled="true" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>gene_for_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>A data.frame: 15 × 2</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" scope="col">V1</th>
+<th data-quarto-table-cell-role="th" scope="col">V2</th>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
+<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>LOC102548918</td>
+<td>L2/3 IT,L5 IT,L6 CT,L6 IT,OPC</td>
+</tr>
+<tr class="even">
+<td>Slit2</td>
+<td>L2/3 IT,L4 IT,L5 IT</td>
+</tr>
+<tr class="odd">
+<td>Aff3</td>
+<td>L2/3 IT,L5 ET,L6 CT,L6 IT</td>
+</tr>
+<tr class="even">
+<td>Pde10a</td>
+<td>L2/3 IT,L5 ET,L6 CT,L6 IT</td>
+</tr>
+<tr class="odd">
+<td>Dscaml1</td>
+<td>L2/3 IT,L6 IT,OPC</td>
+</tr>
+<tr class="even">
+<td>Samd5</td>
+<td>L5 IT,L6 CT,L6 IT</td>
+</tr>
+<tr class="odd">
+<td>Apba2</td>
+<td>L2/3 IT,L4 IT</td>
+</tr>
+<tr class="even">
+<td>Grm3</td>
+<td>L2/3 IT,L5 ET</td>
+</tr>
+<tr class="odd">
+<td>Klhl1</td>
+<td>L2/3 IT,L5 ET</td>
+</tr>
+<tr class="even">
+<td>Pdzd2</td>
+<td>L2/3 IT,L5 ET</td>
+</tr>
+<tr class="odd">
+<td>Ppm1l</td>
+<td>L2/3 IT,L5 ET</td>
+</tr>
+<tr class="even">
+<td>Kcnd3</td>
+<td>L2/3 IT,L6 CT</td>
+</tr>
+<tr class="odd">
+<td>Zmiz1</td>
+<td>L2/3 IT,L6 IT</td>
+</tr>
+<tr class="even">
+<td>Fmn1</td>
+<td>L4 IT,L6 IT</td>
+</tr>
+<tr class="odd">
+<td>Myt1l</td>
+<td>L5 ET,L6 CT</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="99d8dbc0-52df-4517-9d05-a421e860e56e" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>label_df <span class="op">&lt;-</span> data.frame(celltype<span class="op">=</span>c(<span class="st">"L2/3 IT"</span>,<span class="st">"L5 IT"</span>),label<span class="op">=</span>c(<span class="st">"*"</span>,<span class="st">"ns"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="d6795cac-4c72-4e27-b951-a7762de38733" class="cell" data-execution_count="72">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>options(<span class="bu">repr</span>.plot.width <span class="op">=</span> <span class="dv">8</span>, <span class="bu">repr</span>.plot.height <span class="op">=</span> <span class="dv">4</span>, <span class="bu">repr</span>.plot.res <span class="op">=</span> <span class="dv">300</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>make_vlnplot(genes<span class="op">=</span><span class="st">"Pde10a"</span>,</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>                 celltype<span class="op">=</span>names(pseudo_de),</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>            label_df<span class="op">=</span>subset(isoVSsoc_DEG_ls,gene<span class="op">==</span><span class="st">"Pde10a"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Scale for fill is already present.
+Adding another scale for fill, which will replace the existing scale.</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="iso_vs_soc_DEG_visualization_files/figure-html/cell-27-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="5a5e760a-a2e8-40d2-ad91-775f89dbc999" class="cell" data-scrolled="true">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>pdf(<span class="bu">file</span> <span class="op">=</span> <span class="st">"./Vlnplot_for_overlapping_DEGs.pdf"</span>,width<span class="op">=</span><span class="dv">4</span>,height<span class="op">=</span><span class="dv">4</span>,onefile<span class="op">=</span>TRUE)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="kw">in</span> seq_len(nrow(gene_for_plot))){</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    p <span class="op">&lt;-</span> make_vlnplot(genes<span class="op">=</span>gene_for_plot[i,<span class="st">"V1"</span>],</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>                 celltype<span class="op">=</span>unlist(stringr::str_split(gene_for_plot[i,<span class="st">"V2"</span>],<span class="st">","</span>)))</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(p)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>dev.off()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="5eb22964-321a-4e5f-807b-a15d77936632" class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>seu_obj<span class="op">@</span>meta.data$group <span class="op">&lt;-</span> factor(seu_obj<span class="op">@</span>meta.data$group,levels<span class="op">=</span>c(<span class="st">"soc"</span>,<span class="st">"iso"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="d96eee0f-5058-4eab-87f1-16183ebdec0b" class="cell" data-scrolled="true">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co">## make plot for those genes in all celltypes</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>pdf(<span class="bu">file</span> <span class="op">=</span> <span class="st">"./Vlnplot_for_isoVSsoc_DEGs_in_all_celltypes (log=F).pdf"</span>,width<span class="op">=</span><span class="dv">8</span>,height<span class="op">=</span><span class="dv">4</span>,onefile<span class="op">=</span>TRUE)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="kw">in</span> seq_len(nrow(gene_for_plot))){</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    p <span class="op">&lt;-</span> make_vlnplot(genes<span class="op">=</span>gene_for_plot[i,<span class="st">"V1"</span>],</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>                 celltype<span class="op">=</span>names(pseudo_de),</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>            label_df<span class="op">=</span>subset(isoVSsoc_DEG_ls,gene<span class="op">==</span>gene_for_plot[i,<span class="st">"V1"</span>]))</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(p)</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>dev.off()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="b9d21237-72e4-42d3-a408-e51af9940a4b" class="cell" data-execution_count="38">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>dev.off()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<strong>pdf:</strong> 3
+</div>
+</div>
+</section>
+</section>
+<section id="make-umaps-for-degs" class="level2">
+<h2 class="anchored" data-anchor-id="make-umaps-for-degs">make umaps for DEGs</h2>
+<div id="e474f991-8ef4-41eb-8455-6ca3ca5eb766" class="cell" data-execution_count="105">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>my_cols <span class="op">=</span> c(<span class="st">"L2/3 IT"</span> <span class="op">=</span> <span class="st">"#D9F0A3"</span>,</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>            <span class="st">"L4 IT"</span> <span class="op">=</span> <span class="st">"#C77963"</span>,</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>            <span class="st">"L5 IT"</span> <span class="op">=</span> <span class="st">"#FDDCFF"</span>,</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>            <span class="st">"L6 IT"</span> <span class="op">=</span> <span class="st">"#B832E5"</span>,</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>            <span class="st">"L5/6 NP"</span> <span class="op">=</span> <span class="st">"#AD6C49"</span>,</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>            <span class="st">"L5 ET"</span> <span class="op">=</span> <span class="st">"#B28D9A"</span>,</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>            <span class="st">"L6 CT"</span> <span class="op">=</span> <span class="st">"#0094C2"</span>,</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>            <span class="st">"CGE-Inh"</span> <span class="op">=</span> <span class="st">"#CEFF00"</span>,</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Sst-Inh"</span> <span class="op">=</span> <span class="st">"#C8C8C8"</span>,</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Pvalb-Inh"</span> <span class="op">=</span> <span class="st">"#0640FF"</span>,</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>            <span class="st">"ASC"</span> <span class="op">=</span> <span class="st">"#00B7FF"</span>,</span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>            <span class="st">"ODC"</span> <span class="op">=</span> <span class="st">"#0DFF00"</span>,</span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>            <span class="st">"OPC"</span> <span class="op">=</span> <span class="st">"#81AA70"</span>,</span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>            <span class="st">"STR"</span> <span class="op">=</span> <span class="st">"#ADBF00"</span>,</span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Endo"</span> <span class="op">=</span> <span class="st">"#9E7153"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="b736bce2-b1ac-41f9-82fd-ca98e8ce0af4" class="cell" data-execution_count="106">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>options(<span class="bu">repr</span>.plot.width <span class="op">=</span> <span class="dv">5</span>, <span class="bu">repr</span>.plot.height <span class="op">=</span> <span class="dv">4</span>, <span class="bu">repr</span>.plot.res <span class="op">=</span> <span class="dv">300</span>)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>DimPlot(seu_obj, reduction <span class="op">=</span> <span class="st">"umap"</span>, group.by <span class="op">=</span> <span class="st">"celltype"</span>,alpha<span class="op">=</span><span class="fl">0.7</span>,cols <span class="op">=</span> my_cols)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="iso_vs_soc_DEG_visualization_files/figure-html/cell-33-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="7f10e728-4536-4d8e-82ee-f7cde4acb352" class="cell" data-execution_count="120">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>pdf(<span class="bu">file</span> <span class="op">=</span> <span class="st">"./umap_for_overlapping_DEGs.pdf"</span>,width<span class="op">=</span><span class="dv">10</span>,height<span class="op">=</span><span class="dv">5</span>,onefile<span class="op">=</span>TRUE)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="kw">in</span> seq_len(nrow(gene_for_plot))){</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    p <span class="op">&lt;-</span> FeaturePlot(seu_obj, features <span class="op">=</span> gene_for_plot[i,<span class="st">"V1"</span>],split.by<span class="op">=</span><span class="st">"group"</span>) <span class="op">+</span> </span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>            theme(legend.position <span class="op">=</span> c(<span class="op">-</span><span class="fl">0.35</span>,<span class="fl">0.2</span>))<span class="op">+</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>            theme(legend.text<span class="op">=</span>element_text(size<span class="op">=</span><span class="dv">10</span>, color<span class="op">=</span><span class="st">"black"</span>))</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(p)</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>dev.off()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<strong>png:</strong> 2
+</div>
+</div>
+</section>
+<section id="make-heatmap-for-degs" class="level2">
+<h2 class="anchored" data-anchor-id="make-heatmap-for-degs">make heatmap for DEGs</h2>
+<div id="3f0e01ff-90f0-44ac-91b2-a6acfe8af919" class="cell" data-execution_count="96">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>all_up_gene <span class="op">&lt;-</span> do.call(rbind,Map(cbind, DEG_up_ls, new_clumn <span class="op">=</span> names(DEG_up_ls))) <span class="op">%&gt;%</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  mutate(gene <span class="op">=</span> str_split(row.names(.), <span class="st">"</span><span class="ch">\\</span><span class="st">."</span>, simplify <span class="op">=</span> TRUE)[, <span class="dv">2</span>]) <span class="op">%&gt;%</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">filter</span>(gene <span class="op">!=</span> <span class="st">""</span>) <span class="op">%&gt;%</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    pull(gene) <span class="op">%&gt;%</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>    unique()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="1bf5dd5a-1005-4df3-8f6e-ddfd0772222c" class="cell" data-execution_count="100">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>options(<span class="bu">repr</span>.plot.width <span class="op">=</span> <span class="dv">7</span>, <span class="bu">repr</span>.plot.height <span class="op">=</span> <span class="dv">4</span>, <span class="bu">repr</span>.plot.res <span class="op">=</span> <span class="dv">300</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>col_anno <span class="op">=</span> data.frame(celltype<span class="op">=</span>pseudo_seu<span class="op">@</span>meta.data$celltype,</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>                     sex<span class="op">=</span>str_split(pseudo_seu<span class="op">@</span>meta.data$sample_name,<span class="st">"-"</span>,simplify <span class="op">=</span> T)[,<span class="dv">2</span>],</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>                      group<span class="op">=</span>str_split(pseudo_seu<span class="op">@</span>meta.data$sample_name,<span class="st">"-"</span>,simplify <span class="op">=</span> T)[,<span class="dv">1</span>],</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>                     row.names<span class="op">=</span>row.names(pseudo_seu<span class="op">@</span>meta.data))</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>column_ha <span class="op">=</span> HeatmapAnnotation(celltype<span class="op">=</span>col_anno$celltype,</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>                              sex<span class="op">=</span>col_anno$sex,group<span class="op">=</span>col_anno$group,</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>                             col <span class="op">=</span> <span class="bu">list</span>(sex <span class="op">=</span> c(<span class="st">"F"</span><span class="op">=</span><span class="st">"#81b29a"</span>,<span class="st">"M"</span><span class="op">=</span><span class="st">"#e07a5f"</span>),</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>                                       group <span class="op">=</span> c(<span class="st">"iso"</span><span class="op">=</span><span class="st">"#8da9c4"</span>,<span class="st">"soc"</span><span class="op">=</span><span class="st">"#f2cc8f"</span>),</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>                                       celltype <span class="op">=</span> c(<span class="st">"L2/3 IT"</span> <span class="op">=</span> <span class="st">"#D9F0A3"</span>,<span class="st">"L4 IT"</span> <span class="op">=</span> <span class="st">"#C77963"</span>,<span class="st">"L5 IT"</span> <span class="op">=</span> <span class="st">"#FDDCFF"</span>,</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>                                                   <span class="st">"L6 IT"</span> <span class="op">=</span> <span class="st">"#B832E5"</span>,<span class="st">"L5/6 NP"</span> <span class="op">=</span> <span class="st">"#AD6C49"</span>,<span class="st">"L5 ET"</span> <span class="op">=</span> <span class="st">"#B28D9A"</span>,</span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>                                                   <span class="st">"L6 CT"</span> <span class="op">=</span> <span class="st">"#0094C2"</span>,<span class="st">"CGE-Inh"</span> <span class="op">=</span> <span class="st">"#CEFF00"</span>,<span class="st">"Sst-Inh"</span> <span class="op">=</span> <span class="st">"#C8C8C8"</span>,</span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>                                                   <span class="st">"Pvalb-Inh"</span> <span class="op">=</span> <span class="st">"#0640FF"</span>,<span class="st">"ASC"</span> <span class="op">=</span> <span class="st">"#00B7FF"</span>,<span class="st">"ODC"</span> <span class="op">=</span> <span class="st">"#0DFF00"</span>,</span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>                                                    <span class="st">"OPC"</span> <span class="op">=</span> <span class="st">"#81AA70"</span>,<span class="st">"Endo"</span> <span class="op">=</span> <span class="st">"#9E7153"</span>,<span class="st">"STR"</span> <span class="op">=</span> <span class="st">"#ADBF00"</span>)))</span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>lgd1 <span class="op">=</span> Legend(title <span class="op">=</span> <span class="st">"group"</span>, at <span class="op">=</span> c(<span class="st">"iso"</span>,<span class="st">"soc"</span>), legend_gp <span class="op">=</span> gpar(fill <span class="op">=</span> <span class="dv">1</span>:<span class="dv">2</span>))</span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>lgd2 <span class="op">=</span> Legend(title <span class="op">=</span> <span class="st">"sex"</span>, at <span class="op">=</span> c(<span class="st">"F"</span>,<span class="st">"M"</span>), legend_gp <span class="op">=</span> gpar(fill <span class="op">=</span> <span class="dv">3</span>:<span class="dv">4</span>))</span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a>p <span class="op">&lt;-</span> Heatmap(t(scale(t(pseudo_seu<span class="op">@</span>assays$RNA$data[all_up_gene,]))),</span>
+<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a>        top_annotation <span class="op">=</span> column_ha,</span>
+<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a>        cluster_rows <span class="op">=</span> FALSE,</span>
+<span id="cb39-22"><a href="#cb39-22" aria-hidden="true" tabindex="-1"></a>        cluster_columns <span class="op">=</span> FALSE,</span>
+<span id="cb39-23"><a href="#cb39-23" aria-hidden="true" tabindex="-1"></a>        row_names_gp <span class="op">=</span> gpar(fontsize <span class="op">=</span> <span class="dv">6</span>),</span>
+<span id="cb39-24"><a href="#cb39-24" aria-hidden="true" tabindex="-1"></a>        column_names_gp <span class="op">=</span> gpar(fontsize <span class="op">=</span> <span class="dv">6</span>),</span>
+<span id="cb39-25"><a href="#cb39-25" aria-hidden="true" tabindex="-1"></a>        column_split <span class="op">=</span> factor(col_anno$celltype,levels<span class="op">=</span>unique(col_anno$celltype)),</span>
+<span id="cb39-26"><a href="#cb39-26" aria-hidden="true" tabindex="-1"></a>        column_title_gp <span class="op">=</span> gpar( fontsize <span class="op">=</span> <span class="dv">5</span>),</span>
+<span id="cb39-27"><a href="#cb39-27" aria-hidden="true" tabindex="-1"></a>        name<span class="op">=</span><span class="st">"expession"</span>,</span>
+<span id="cb39-28"><a href="#cb39-28" aria-hidden="true" tabindex="-1"></a>        show_column_names <span class="op">=</span> FALSE        </span>
+<span id="cb39-29"><a href="#cb39-29" aria-hidden="true" tabindex="-1"></a>       )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="2dd94fe7-5985-4881-ad3b-72236c39129c" class="cell" data-execution_count="101">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="iso_vs_soc_DEG_visualization_files/figure-html/cell-37-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="fe314397-a753-46c8-993d-0b6047d66e11" class="cell" data-execution_count="102">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>all_down_gene <span class="op">&lt;-</span> do.call(rbind,Map(cbind, DEG_down_ls, new_clumn <span class="op">=</span> names(DEG_down_ls))) <span class="op">%&gt;%</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  mutate(gene <span class="op">=</span> str_split(row.names(.), <span class="st">"</span><span class="ch">\\</span><span class="st">."</span>, simplify <span class="op">=</span> TRUE)[, <span class="dv">2</span>]) <span class="op">%&gt;%</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">filter</span>(gene <span class="op">!=</span> <span class="st">""</span>) <span class="op">%&gt;%</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    pull(gene) <span class="op">%&gt;%</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>    unique()</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>options(<span class="bu">repr</span>.plot.width <span class="op">=</span> <span class="dv">7</span>, <span class="bu">repr</span>.plot.height <span class="op">=</span> <span class="dv">4</span>, <span class="bu">repr</span>.plot.res <span class="op">=</span> <span class="dv">300</span>)</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>col_anno <span class="op">=</span> data.frame(celltype<span class="op">=</span>pseudo_seu<span class="op">@</span>meta.data$celltype,</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>                     sex<span class="op">=</span>str_split(pseudo_seu<span class="op">@</span>meta.data$sample_name,<span class="st">"-"</span>,simplify <span class="op">=</span> T)[,<span class="dv">2</span>],</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>                      group<span class="op">=</span>str_split(pseudo_seu<span class="op">@</span>meta.data$sample_name,<span class="st">"-"</span>,simplify <span class="op">=</span> T)[,<span class="dv">1</span>],</span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>                     row.names<span class="op">=</span>row.names(pseudo_seu<span class="op">@</span>meta.data))</span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>column_ha <span class="op">=</span> HeatmapAnnotation(celltype<span class="op">=</span>col_anno$celltype,</span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>                              sex<span class="op">=</span>col_anno$sex,group<span class="op">=</span>col_anno$group,</span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>                             col <span class="op">=</span> <span class="bu">list</span>(sex <span class="op">=</span> c(<span class="st">"F"</span><span class="op">=</span><span class="st">"#81b29a"</span>,<span class="st">"M"</span><span class="op">=</span><span class="st">"#e07a5f"</span>),</span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>                                       group <span class="op">=</span> c(<span class="st">"iso"</span><span class="op">=</span><span class="st">"#8da9c4"</span>,<span class="st">"soc"</span><span class="op">=</span><span class="st">"#f2cc8f"</span>),</span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>                                       celltype <span class="op">=</span> c(<span class="st">"L2/3 IT"</span> <span class="op">=</span> <span class="st">"#D9F0A3"</span>,<span class="st">"L4 IT"</span> <span class="op">=</span> <span class="st">"#C77963"</span>,<span class="st">"L5 IT"</span> <span class="op">=</span> <span class="st">"#FDDCFF"</span>,</span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a>                                                   <span class="st">"L6 IT"</span> <span class="op">=</span> <span class="st">"#B832E5"</span>,<span class="st">"L5/6 NP"</span> <span class="op">=</span> <span class="st">"#AD6C49"</span>,<span class="st">"L5 ET"</span> <span class="op">=</span> <span class="st">"#B28D9A"</span>,</span>
+<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a>                                                   <span class="st">"L6 CT"</span> <span class="op">=</span> <span class="st">"#0094C2"</span>,<span class="st">"CGE-Inh"</span> <span class="op">=</span> <span class="st">"#CEFF00"</span>,<span class="st">"Sst-Inh"</span> <span class="op">=</span> <span class="st">"#C8C8C8"</span>,</span>
+<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a>                                                   <span class="st">"Pvalb-Inh"</span> <span class="op">=</span> <span class="st">"#0640FF"</span>,<span class="st">"ASC"</span> <span class="op">=</span> <span class="st">"#00B7FF"</span>,<span class="st">"Oligo"</span> <span class="op">=</span> <span class="st">"#21F4CC"</span>,</span>
+<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a>                                                   <span class="st">"ODC"</span> <span class="op">=</span> <span class="st">"#0DFF00"</span>,<span class="st">"OPC"</span> <span class="op">=</span> <span class="st">"#81AA70"</span>,<span class="st">"STR"</span> <span class="op">=</span> <span class="st">"#ADBF00"</span>,<span class="st">"Endo"</span> <span class="op">=</span> <span class="st">"#9E7153"</span>)))</span>
+<span id="cb41-21"><a href="#cb41-21" aria-hidden="true" tabindex="-1"></a>lgd1 <span class="op">=</span> Legend(title <span class="op">=</span> <span class="st">"group"</span>, at <span class="op">=</span> c(<span class="st">"iso"</span>,<span class="st">"soc"</span>), legend_gp <span class="op">=</span> gpar(fill <span class="op">=</span> <span class="dv">1</span>:<span class="dv">2</span>))</span>
+<span id="cb41-22"><a href="#cb41-22" aria-hidden="true" tabindex="-1"></a>lgd2 <span class="op">=</span> Legend(title <span class="op">=</span> <span class="st">"sex"</span>, at <span class="op">=</span> c(<span class="st">"F"</span>,<span class="st">"M"</span>), legend_gp <span class="op">=</span> gpar(fill <span class="op">=</span> <span class="dv">3</span>:<span class="dv">4</span>))</span>
+<span id="cb41-23"><a href="#cb41-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-24"><a href="#cb41-24" aria-hidden="true" tabindex="-1"></a>p<span class="op">&lt;-</span> Heatmap(t(scale(t(pseudo_seu<span class="op">@</span>assays$RNA$data[all_down_gene,]))),</span>
+<span id="cb41-25"><a href="#cb41-25" aria-hidden="true" tabindex="-1"></a>        top_annotation <span class="op">=</span> column_ha,</span>
+<span id="cb41-26"><a href="#cb41-26" aria-hidden="true" tabindex="-1"></a>        cluster_rows <span class="op">=</span> FALSE,</span>
+<span id="cb41-27"><a href="#cb41-27" aria-hidden="true" tabindex="-1"></a>        cluster_columns <span class="op">=</span> FALSE,</span>
+<span id="cb41-28"><a href="#cb41-28" aria-hidden="true" tabindex="-1"></a>        row_names_gp <span class="op">=</span> gpar(fontsize <span class="op">=</span> <span class="dv">6</span>),</span>
+<span id="cb41-29"><a href="#cb41-29" aria-hidden="true" tabindex="-1"></a>        column_names_gp <span class="op">=</span> gpar(fontsize <span class="op">=</span> <span class="dv">6</span>),</span>
+<span id="cb41-30"><a href="#cb41-30" aria-hidden="true" tabindex="-1"></a>        column_split <span class="op">=</span> factor(col_anno$celltype,levels<span class="op">=</span>unique(col_anno$celltype)),</span>
+<span id="cb41-31"><a href="#cb41-31" aria-hidden="true" tabindex="-1"></a>        column_title_gp <span class="op">=</span> gpar( fontsize <span class="op">=</span> <span class="dv">5</span>),</span>
+<span id="cb41-32"><a href="#cb41-32" aria-hidden="true" tabindex="-1"></a>        name<span class="op">=</span><span class="st">"expession"</span>,</span>
+<span id="cb41-33"><a href="#cb41-33" aria-hidden="true" tabindex="-1"></a>        show_column_names <span class="op">=</span> FALSE        </span>
+<span id="cb41-34"><a href="#cb41-34" aria-hidden="true" tabindex="-1"></a>       )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="c25e58ad-0007-4411-a50f-df03a33e4b01" class="cell" data-execution_count="103">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="iso_vs_soc_DEG_visualization_files/figure-html/cell-39-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="ec9ddb8f-8c1a-41e8-aa2a-a69dc88d4bc8" class="cell" data-execution_count="104">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>options(<span class="bu">repr</span>.plot.width <span class="op">=</span> <span class="dv">5</span>, <span class="bu">repr</span>.plot.height <span class="op">=</span> <span class="dv">4</span>, <span class="bu">repr</span>.plot.res <span class="op">=</span> <span class="dv">300</span>)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>seu_obj<span class="op">@</span>meta.data <span class="op">%&gt;%</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#count(celltype) %&gt;%</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">filter</span>(celltype<span class="op">!=</span><span class="st">"NA"</span>) <span class="op">%&gt;%</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>    ggplot(aes(x<span class="op">=</span>celltype))<span class="op">+</span></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>    geom_bar(fill<span class="op">=</span><span class="st">"darkgrey"</span>)<span class="op">+</span></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>    geom_text(stat<span class="op">=</span><span class="st">'count'</span>, aes(label<span class="op">=</span>..count..), vjust<span class="op">=-</span><span class="fl">0.2</span>,size<span class="op">=</span><span class="dv">2</span>)<span class="op">+</span></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">#geom_text(aes(label = n), vjust = 0.5,size=2)+</span></span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>    facet_grid(group<span class="op">~</span>.)<span class="op">+</span></span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>    labs(x<span class="op">=</span><span class="st">""</span>,y<span class="op">=</span><span class="st">"# of cells"</span>)<span class="op">+</span></span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>    theme_minimal()<span class="op">+</span></span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>    theme(axis.text.x<span class="op">=</span>element_text(angle<span class="op">=</span><span class="dv">90</span>,hjust<span class="op">=</span><span class="dv">1</span>),</span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>         plot.margin <span class="op">=</span> unit(c(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>), <span class="st">"cm"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="iso_vs_soc_DEG_visualization_files/figure-html/cell-40-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="go-analysis-for-degs" class="level2">
+<h2 class="anchored" data-anchor-id="go-analysis-for-degs">GO analysis for DEGs</h2>
+<div id="d4e435a9-5476-4a76-852c-3369f94510b0" class="cell" data-scrolled="true">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>library(stringr)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>library(viridis)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>library(org.Rn.eg.db)</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>library(clusterProfiler)</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>library(openxlsx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="3263570f-1c5b-4151-a5fc-68c977522bdf" class="cell" data-execution_count="129">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="bu">dir</span>.create(<span class="st">"./isoVSsoc_DEG_GO_2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="d05f787d-87b2-44fc-b132-4730f3703b46" class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>DEG_ls <span class="op">&lt;-</span> lapply(pseudo_de, function(x){ x <span class="op">%&gt;%</span> <span class="bu">filter</span>(p_val_adj<span class="op">&lt;</span><span class="fl">0.05</span>,<span class="bu">abs</span>(avg_log2FC) <span class="op">&gt;</span><span class="fl">0.3</span>) <span class="op">%&gt;%</span> row.names()})</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>names(DEG_ls) <span class="op">=</span> str_replace_all(string <span class="op">=</span>names(DEG_ls) ,pattern <span class="op">=</span> <span class="st">"</span><span class="ch">\\</span><span class="st">/"</span> ,replacement <span class="op">=</span> <span class="st">""</span>)</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>GO_ls <span class="op">&lt;-</span> <span class="bu">list</span>()</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="kw">in</span> seq_len(length(DEG_ls))){</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(length(DEG_ls[[i]])<span class="op">&gt;</span><span class="dv">5</span>){</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>           go_res <span class="op">&lt;-</span> enrichGO(DEG_ls[[i]],OrgDb<span class="op">=</span>org.Rn.eg.db,keyType<span class="op">=</span><span class="st">"SYMBOL"</span>,ont<span class="op">=</span><span class="st">"BP"</span>,pvalueCutoff  <span class="op">=</span> <span class="fl">0.05</span>, qvalueCutoff  <span class="op">=</span> <span class="dv">1</span>)</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>          <span class="cf">if</span>(<span class="op">!</span><span class="kw">is</span>.null(go_res<span class="op">@</span>result)){</span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>              GO_ls[names(DEG_ls)[i]] <span class="op">&lt;-</span> go_res</span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>          }</span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>           }</span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a>cp_GO_ls <span class="op">&lt;-</span> GO_ls</span>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a>write.xlsx(lapply(cp_GO_ls,function(df){df<span class="op">@</span>result}),<span class="bu">file</span><span class="op">=</span><span class="st">"./isoVSsoc_DEG_GO_2/isoVSsoc_DEG_FC0.3_GO.xlsx"</span>,asTable<span class="op">=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="f26fde8f-f497-40e1-9210-d6bd0c7c4c6a" class="cell" data-scrolled="true">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>pdf(<span class="st">"/project/zhuzhuzhang/lyang/scaleBio_RNA_rat_brain/out_mRatBN/isoVSsoc_DEG_GO_2/isoVSsoc_DEG_FC0.3_GO_dotplot.pdf"</span>,onefile<span class="op">=</span>TRUE)</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>lapply(seq_along(GO_ls),</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>       function(i){</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>           <span class="cf">if</span>(<span class="op">!</span><span class="kw">is</span>.null(GO_ls[[i]])){</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>           <span class="cf">if</span>(dim(GO_ls[[i]]<span class="op">@</span>result)[<span class="dv">1</span>]<span class="op">&gt;</span><span class="dv">0</span>){</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>               <span class="cf">if</span>(<span class="bu">sum</span>(GO_ls[[i]]<span class="op">@</span>result$p.adjust<span class="op">&lt;</span><span class="fl">0.05</span>)<span class="op">&gt;</span><span class="dv">0</span>){</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>                   GO_ls[[i]]<span class="op">@</span>result <span class="op">%&gt;%</span></span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>                   <span class="bu">filter</span>(p.adjust<span class="op">&lt;</span><span class="fl">0.05</span>) <span class="op">%&gt;%</span></span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>                       mutate(ratio<span class="op">=</span><span class="im">as</span>.numeric(str_split(GeneRatio,<span class="st">"/"</span>,simplify<span class="op">=</span>T)[,<span class="dv">1</span>])<span class="op">/</span><span class="im">as</span>.numeric(str_split(GeneRatio,<span class="st">"/"</span>,simplify<span class="op">=</span>T)[,<span class="dv">2</span>])) <span class="op">%&gt;%</span></span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>                       slice_head(n<span class="op">=</span><span class="dv">15</span>) <span class="op">%&gt;%</span></span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a>                        arrange(ratio) <span class="op">%&gt;%</span></span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a>                        mutate(Description<span class="op">=</span>factor(Description,levels<span class="op">=</span>Description)) <span class="op">%&gt;%</span></span>
+<span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a>                       ggplot(aes(x<span class="op">=</span>ratio,y<span class="op">=</span>Description))<span class="op">+</span></span>
+<span id="cb47-14"><a href="#cb47-14" aria-hidden="true" tabindex="-1"></a>                       geom_point(aes(color<span class="op">=</span>p.adjust,size<span class="op">=</span>ratio))<span class="op">+</span></span>
+<span id="cb47-15"><a href="#cb47-15" aria-hidden="true" tabindex="-1"></a>                       labs(title<span class="op">=</span>paste0(names(GO_ls)[i],<span class="st">" "</span>,<span class="st">"iso vs soc "</span>,<span class="st">"("</span>,length(DEG_ls[[i]]) ,<span class="st">")"</span>))<span class="op">+</span></span>
+<span id="cb47-16"><a href="#cb47-16" aria-hidden="true" tabindex="-1"></a>                       scale_y_discrete(labels <span class="op">=</span> function(x) str_wrap(x, width <span class="op">=</span> <span class="dv">50</span>))<span class="op">+</span></span>
+<span id="cb47-17"><a href="#cb47-17" aria-hidden="true" tabindex="-1"></a>                        scale_color_viridis(option <span class="op">=</span> <span class="st">"D"</span>)</span>
+<span id="cb47-18"><a href="#cb47-18" aria-hidden="true" tabindex="-1"></a>                   }</span>
+<span id="cb47-19"><a href="#cb47-19" aria-hidden="true" tabindex="-1"></a>               </span>
+<span id="cb47-20"><a href="#cb47-20" aria-hidden="true" tabindex="-1"></a>           }</span>
+<span id="cb47-21"><a href="#cb47-21" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb47-22"><a href="#cb47-22" aria-hidden="true" tabindex="-1"></a>           }</span>
+<span id="cb47-23"><a href="#cb47-23" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb47-24"><a href="#cb47-24" aria-hidden="true" tabindex="-1"></a>dev.off()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    const typesetMath = (el) => {
+      if (window.MathJax) {
+        // MathJax Typeset
+        window.MathJax.typeset([el]);
+      } else if (window.katex) {
+        // KaTeX Render
+        var mathElements = el.getElementsByClassName("math");
+        var macros = [];
+        for (var i = 0; i < mathElements.length; i++) {
+          var texText = mathElements[i].firstChild;
+          if (mathElements[i].tagName == "SPAN") {
+            window.katex.render(texText.data, mathElements[i], {
+              displayMode: mathElements[i].classList.contains('display'),
+              throwOnError: false,
+              macros: macros,
+              fleqn: false
+            });
+          }
+        }
+      }
+    }
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        for (let i = 0; i < 2; i++) {
+          container.appendChild(note.children[i].cloneNode(true));
+        }
+        typesetMath(container);
+        return container.innerHTML
+      } else {
+        typesetMath(note);
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      typesetMath(note);
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

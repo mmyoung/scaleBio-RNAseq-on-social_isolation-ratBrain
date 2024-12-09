@@ -140,7 +140,7 @@ ul.task-list li input[type="checkbox"] {
 <pre><code>module load singularity
 nextflow run /project/zhuzhuzhang/lyang/software/ScaleRna/ -params-file runParams.yml -profile singularity --outDir /project/zhuzhuzhang/lyang/scaleBio_RNA_rat_brain/out_mRatBN —-splitFastq true</code></pre>
 <p><strong>inputs:</strong></p>
-<p><a href="./script/runParams.yml">runParams.yml</a></p>
+<p><a href="../script/runParams.yml">runParams.yml</a></p>
 <p><strong>outputs:</strong></p>
 <p>quality control (/project/zhuzhuzhang/lyang/scaleBio_RNA_rat_brain/out_mRatBN/samples)</p>
 <p>cell by feature matrix (/project/zhuzhuzhang/lyang/scaleBio_RNA_rat_brain/out_mRatBN/alignment)</p>
@@ -149,8 +149,47 @@ nextflow run /project/zhuzhuzhang/lyang/software/ScaleRna/ -params-file runParam
 </ol>
 <p><a href="cell_clustering.html">Cell clustering was perform in R with Seurat package</a></p>
 <ol start="3" type="1">
-<li></li>
+<li>Marker gene indentification in each cluster and cell type annotation</li>
 </ol>
+<p>Marker genes in each cluster are identified with <code>FindAllmarker</code> function in Seurat. The top 10 genes are saved and manually compared with the database to annotate the cell types for each cluster.</p>
+<p><a href="cluster_annotation.html"><strong>script:</strong></a></p>
+<p><strong>outputs:</strong></p>
+<p><a href="https://drive.google.com/file/d/1p-tYEjZUDYtx7mR7NflJWEPTR0LNpI-M/view?usp=drive_link">Cluster highlighted in umaps.</a> <a href="https://drive.google.com/file/d/1xW9gSP3w7PrulhY3mcOuhQFS0VB0sfg1/view?usp=drive_link">The umap projections of expression marker gene.</a> <a href="https://docs.google.com/spreadsheets/d/17Y31mBy9B0aljy72LLnAPNpoxCN6zZLhlXBFzCg-awM/edit?usp=drive_link">Cell type annotation gene list.</a></p>
+<ol start="4" type="1">
+<li>differential expression analysis between social isolation and social grouped samples</li>
+</ol>
+<p>The comparison are based on pseudobulk expression of each cell type in each sample.</p>
+<p><a href="DEG_analysis_iso_vs_soc.html"><strong>script:</strong></a></p>
+<p><strong>outputs:</strong></p>
+<p><a href="../outputs/DEG_FC0.3_counts_barplot_2.pdf">DEG counts in each cell type between iso and soc groups</a> <a href="https://drive.google.com/drive/folders/1vyPnJ4aQlVgrAcMo2c_cSNqdUHIiz79B?usp=drive_link">gene lists from the DEG analysis and filtered significantly differentially expressed genes with criteria: adjusted.p&lt;0.05 &amp; |log2FC|&gt;0.3</a></p>
+<ol start="5" type="1">
+<li>visualization on the DEGs between social isolation and social grouped comparison</li>
+</ol>
+<p><a href="iso_vs_soc_DEG_visualization.html"><strong>script</strong></a></p>
+<p><strong>outputs:</strong></p>
+<p><a href="../outputs/isoVSsoc_DEG_logFC_heatmap.pdf">heatmap for log2FC of DEGs in iso&amp;soc comparison</a> <a href="https://drive.google.com/file/d/12bkUK9wwWnwjBqQUuQmsxsbzI_nVF-8V/view?usp=drive_link">Violin plots of DEG expression in iso and soc groups</a> <a href="https://drive.google.com/file/d/1XUcQwIZnNIeu8fGhCLbE9HwYXYf-RSao/view?usp=drive_link">umap projecting the expression level of DEGs in each cell</a></p>
+<ol start="6" type="1">
+<li>differential expression analysis between female and male samples with social isolation and social grouped groups</li>
+</ol>
+<p><a href="DEG_analysis_F_vs_M.html"><strong>script</strong></a></p>
+<p><strong>outputs:</strong> <a href="https://drive.google.com/drive/folders/1R0_wEIfob2jwujwN7ijTYtl6ExWU-4Sz?usp=drive_link">gene lists from the DEG analysis and filtered significantly differentially expressed genes with criteria: adjusted.p&lt;0.05 &amp; |log2FC|&gt;0.3</a></p>
+<ol start="7" type="1">
+<li>visualization on the DEGs between female and male comparison</li>
+</ol>
+<p><a href="sex_DEG_plot.html"><strong>script</strong></a></p>
+<p><strong>outputs:</strong></p>
+<p>heatmaps:</p>
+<p><a href="https://drive.google.com/drive/folders/1-MPa-pQrpmmMFsI-UmCmYJUmbA7dZKXz?usp=drive_link">heatmap for log2FC of DEGs in F&amp;M comparison</a></p>
+<p>umaps:</p>
+<p><a href="https://drive.google.com/file/d/1ujv1Oxv-nIDN9WiGDA9KChfhR6LS5nWl/view?usp=drive_link">umap projecting the expression level of DEGs between F&amp;M comparison in soc group</a> &amp;</p>
+<p><a href="https://drive.google.com/file/d/1vyZy_f4YklpoiqHshb8UcBFwxCYjaVjk/view?usp=drive_link">umap projecting the expression level of DEGs between F&amp;M comparison in iso group</a></p>
+<p>violin plot:</p>
+<p><a href="https://drive.google.com/file/d/1GnPFiDTRAboEHK_34HY5XSBzRK9bS01T/view?usp=drive_link">violin plot of gene expression of DEGs between F&amp;M comparison in soc group</a></p>
+<p><a href="https://drive.google.com/file/d/1elizpJDO6-6KoptOsUv8xzSR96Oi7R4r/view?usp=drive_link">violin plot of gene expression of DEGs between F&amp;M comparison in iso group</a></p>
+<ol start="8" type="1">
+<li>genomic track visualization</li>
+</ol>
+<p>steps involved: <a href="../script/workflow.sh">* split the integrated .bam files into individual cell based on the barcode information</a> <a href="../script/run_bam_gather.sh">* To gather the single-cell .bam files to the same folder annotated as the same cell type (not necessarily move to same folder, create softlink works)</a> <a href="../script/samtools_merge.sh">* Merge the .bam files together for each cell type in each sample</a> <a href="../script/make_bigwig.sh">* Make .bigwig from the merged .bam file</a> <a href="../script/soc_FvsM_pygenometrack.sh">* make Genome tracks with pygenometrack</a></p>
 
 
 </section>
