@@ -26,11 +26,17 @@ The data preprocessing are implemented with pipeline from ScaleBio with the comm
 module load singularity
 nextflow run /project/zhuzhuzhang/lyang/software/ScaleRna/ -params-file runParams.yml -profile singularity --outDir /project/zhuzhuzhang/lyang/scaleBio_RNA_rat_brain/out_mRatBN —-splitFastq true
 ```
-parameters:
+
+inputs:
 [runParams.yml](../script/runParams.yml)
 
-[notes](notes.html)
+outputs:
+quality control (/project/zhuzhuzhang/lyang/scaleBio_RNA_rat_brain/out_mRatBN/samples)
+cell by feature matrix (/project/zhuzhuzhang/lyang/scaleBio_RNA_rat_brain/out_mRatBN/alignment)
 
-2. 
+2. cell clustering
 
+[Cell clustering was perform in R with Seurat package](cell_clustering.yml)
+
+3. 
 

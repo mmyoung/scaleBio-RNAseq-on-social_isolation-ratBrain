@@ -133,9 +133,13 @@ ul.task-list li input[type="checkbox"] {
 <p>The data preprocessing are implemented with pipeline from ScaleBio with the command:</p>
 <pre><code>module load singularity
 nextflow run /project/zhuzhuzhang/lyang/software/ScaleRna/ -params-file runParams.yml -profile singularity --outDir /project/zhuzhuzhang/lyang/scaleBio_RNA_rat_brain/out_mRatBN —-splitFastq true</code></pre>
-<p>parameters: <a href="../script/runParams.yml">runParams.yml</a></p>
-<p><a href="notes.html">notes</a></p>
+<p>inputs: <a href="../script/runParams.yml">runParams.yml</a></p>
+<p>outputs: quality control (/project/zhuzhuzhang/lyang/scaleBio_RNA_rat_brain/out_mRatBN/samples) cell by feature matrix (/project/zhuzhuzhang/lyang/scaleBio_RNA_rat_brain/out_mRatBN/alignment)</p>
 <ol start="2" type="1">
+<li>cell clustering</li>
+</ol>
+<p><a href="cell_clustering.yml">Cell clustering was perform in R with Seurat package</a></p>
+<ol start="3" type="1">
 <li></li>
 </ol>
 
