@@ -8,7 +8,7 @@ Lin Yang
 ## Project description
 Three replicates for female and male rat treated with social isolation and social grouped respectively are included in the experiment. The treatment was exerted from p41-p55. Then, orbitofrontal cortex are dissected from frozen brain tissues and Hang did the nuclei preparation and library preparation with ScaleBio RNA-seq kit.
 
-The sample loading order on the RT plate are stored at this [spreadsheet](https://github.com/mmyoung/scaleBio-RNAseq-on-social_isolation-ratBrain/data/'9_6_24 12 OFC for ScaleRNA yield summary.xlsx').
+The sample loading order on the RT plate are stored at this [spreadsheet](https://github.com/mmyoung/scaleBio-RNAseq-on-social_isolation-ratBrain/data/9_6_24 12 OFC for ScaleRNA yield summary.xlsx).
 
 A relavant presentation for this project is available at: [presentation](https://uchicago.box.com/s/o20tc5qjuk0ekn20dbln4atk9shx8sb1)
 
@@ -53,7 +53,9 @@ Marker genes in each cluster are identified with `FindAllmarker` function in Seu
 **outputs:**
 
 [Cluster highlighted in umaps.](https://drive.google.com/file/d/1p-tYEjZUDYtx7mR7NflJWEPTR0LNpI-M/view?usp=drive_link)
+
 [The umap projections of expression marker gene.](https://drive.google.com/file/d/1xW9gSP3w7PrulhY3mcOuhQFS0VB0sfg1/view?usp=drive_link)
+
 [Cell type annotation gene list.](https://docs.google.com/spreadsheets/d/17Y31mBy9B0aljy72LLnAPNpoxCN6zZLhlXBFzCg-awM/edit?usp=drive_link)
 
 4. differential expression analysis between social isolation and social grouped samples
@@ -65,6 +67,7 @@ The comparison are based on pseudobulk expression of each cell type in each samp
 **outputs:**
 
 [DEG counts in each cell type between iso and soc groups](https://drive.google.com/file/d/1WzTyDMGrbLhniw3PyvdQhK68E4gdXiCn/view?usp=drive_link)
+
 [gene lists from the DEG analysis and filtered significantly differentially expressed genes with criteria: adjusted.p<0.05 & |log2FC|>0.3](https://drive.google.com/drive/folders/1vyPnJ4aQlVgrAcMo2c_cSNqdUHIiz79B?usp=drive_link)
 
 
@@ -75,7 +78,9 @@ The comparison are based on pseudobulk expression of each cell type in each samp
 **outputs:**
 
 [heatmap for log2FC of DEGs in iso&soc comparison](https://drive.google.com/file/d/1OiL4bKcFYW8W-O-f-YtGFc5CgXv-2OYP/view?usp=drive_link)
+
 [Violin plots of DEG expression in iso and soc groups](https://drive.google.com/file/d/12bkUK9wwWnwjBqQUuQmsxsbzI_nVF-8V/view?usp=drive_link)
+
 [umap projecting the expression level of DEGs in each cell](https://drive.google.com/file/d/1XUcQwIZnNIeu8fGhCLbE9HwYXYf-RSao/view?usp=drive_link)
 
 6. differential expression analysis between female and male samples with social isolation and social grouped groups
