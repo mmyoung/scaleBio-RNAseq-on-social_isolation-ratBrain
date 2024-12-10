@@ -8,6 +8,7 @@ Lin Yang
 ## Project description
 Three replicates for female and male rat treated with social isolation and social grouped respectively are included in the experiment. The treatment was exerted from p41-p55. Then, orbitofrontal cortex are dissected from frozen brain tissues and Hang did the nuclei preparation and library preparation with ScaleBio RNA-seq kit.
 
+The sample loading order on the RT plate are stored at this [spreadsheet](/data/'9_6_24 12 OFC for ScaleRNA yield summary.xlsx').
 A relavant presentation for this project is available at: [presentation](https://uchicago.box.com/s/o20tc5qjuk0ekn20dbln4atk9shx8sb1)
 
 ## Data processing steps
@@ -30,7 +31,7 @@ nextflow run /project/zhuzhuzhang/lyang/software/ScaleRna/ -params-file runParam
 
 **inputs:**
 
-[runParams.yml](../script/runParams.yml)
+[runParams.yml](/blob/master/script/runParams.yml)
 
 **outputs:**
 
@@ -62,7 +63,7 @@ The comparison are based on pseudobulk expression of each cell type in each samp
 
 **outputs:**
 
-[DEG counts in each cell type between iso and soc groups](/outputs/DEG_FC0.3_counts_barplot_2.pdf)
+[DEG counts in each cell type between iso and soc groups](/blob/master/outputs/DEG_FC0.3_counts_barplot_2.pdf)
 [gene lists from the DEG analysis and filtered significantly differentially expressed genes with criteria: adjusted.p<0.05 & |log2FC|>0.3](https://drive.google.com/drive/folders/1vyPnJ4aQlVgrAcMo2c_cSNqdUHIiz79B?usp=drive_link)
 
 
@@ -112,13 +113,13 @@ violin plot:
 
 steps involved:
 
-* [split the integrated .bam files into individual cell based on the barcode information](../script/workflow.sh)
+* [split the integrated .bam files into individual cell based on the barcode information](/blob/master/script/workflow.sh)
 
-* [To gather the single-cell .bam files to the same folder annotated as the same cell type (not necessarily move to same folder, create softlink works)](../script/run_bam_gather.sh)
+* [To gather the single-cell .bam files to the same folder annotated as the same cell type (not necessarily move to same folder, create softlink works)](/blob/master/script/run_bam_gather.sh)
 
 * [Merge the .bam files together for each cell type in each sample](/script/samtools_merge.sh)
 
-* [Make .bigwig from the merged .bam file](/script/make_bigwig.sh)
+* [Make .bigwig from the merged .bam file](/blob/master/script/make_bigwig.sh)
 
-* [make Genome tracks with pygenometrack](/script/soc_FvsM_pygenometrack.sh)
+* [make Genome tracks with pygenometrack](/blob/master/script/soc_FvsM_pygenometrack.sh)
 
