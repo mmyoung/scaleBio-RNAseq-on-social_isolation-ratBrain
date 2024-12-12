@@ -120,7 +120,7 @@ steps involved:
 
 * [split the integrated .bam files into individual cell based on the barcode information](https://github.com/mmyoung/scaleBio-RNAseq-on-social_isolation-ratBrain/blob/master/script/workflow.sh)
 
-* [To gather the single-cell .bam files to the same folder annotated as the same cell type (not necessarily move to same folder, create softlink works)](/blob/master/script/run_bam_gather.sh)
+* [To gather the single-cell .bam files to the same folder annotated as the same cell type (not necessarily move to same folder, create softlink works)](https://github.com/mmyoung/scaleBio-RNAseq-on-social_isolation-ratBrain/blob/master/script/run_bam_gather.sh)
 
 * [Merge the .bam files together for each cell type in each sample](https://github.com/mmyoung/scaleBio-RNAseq-on-social_isolation-ratBrain/blob/master/script/samtools_merge.sh)
 
@@ -128,3 +128,10 @@ steps involved:
 
 * [make Genome tracks with pygenometrack](https://github.com/mmyoung/scaleBio-RNAseq-on-social_isolation-ratBrain/blob/master/script/soc_FvsM_pygenometrack.sh)
 
+**outputs:**
+
+[genomic tracks for DEGs between iso and soc group](https://drive.google.com/drive/folders/1p_kkoN8zhyrLlQNvoj-Q3ZFO7TcZRzud?usp=drive_link)
+
+[genomic tracks for DEGs between female and male samples within social grouped group](https://drive.google.com/drive/folders/1qkaMRzq55wz0G5NuLYIKtPtaJMTRg-qI?usp=drive_link)
+
+[genomic tracks for DEGs between female and male samples within social isolation group](https://drive.google.com/drive/folders/1qZ92qN0spLHe23nCOtUvAFTnFiRIa_VZ?usp=drive_link)

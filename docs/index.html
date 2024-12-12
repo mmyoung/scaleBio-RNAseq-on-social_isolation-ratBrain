@@ -198,11 +198,15 @@ nextflow run /project/zhuzhuzhang/lyang/software/ScaleRna/ -params-file runParam
 <p>steps involved:</p>
 <ul>
 <li><p><a href="https://github.com/mmyoung/scaleBio-RNAseq-on-social_isolation-ratBrain/blob/master/script/workflow.sh">split the integrated .bam files into individual cell based on the barcode information</a></p></li>
-<li><p><a href="./blob/master/script/run_bam_gather.sh">To gather the single-cell .bam files to the same folder annotated as the same cell type (not necessarily move to same folder, create softlink works)</a></p></li>
+<li><p><a href="https://github.com/mmyoung/scaleBio-RNAseq-on-social_isolation-ratBrain/blob/master/script/run_bam_gather.sh">To gather the single-cell .bam files to the same folder annotated as the same cell type (not necessarily move to same folder, create softlink works)</a></p></li>
 <li><p><a href="https://github.com/mmyoung/scaleBio-RNAseq-on-social_isolation-ratBrain/blob/master/script/samtools_merge.sh">Merge the .bam files together for each cell type in each sample</a></p></li>
 <li><p><a href="https://github.com/mmyoung/scaleBio-RNAseq-on-social_isolation-ratBrain/blob/master/script/make_bigwig.sh">Make .bigwig from the merged .bam file</a></p></li>
 <li><p><a href="https://github.com/mmyoung/scaleBio-RNAseq-on-social_isolation-ratBrain/blob/master/script/soc_FvsM_pygenometrack.sh">make Genome tracks with pygenometrack</a></p></li>
 </ul>
+<p><strong>outputs:</strong></p>
+<p><a href="https://drive.google.com/drive/folders/1p_kkoN8zhyrLlQNvoj-Q3ZFO7TcZRzud?usp=drive_link">genomic tracks for DEGs between iso and soc group</a></p>
+<p><a href="https://drive.google.com/drive/folders/1qkaMRzq55wz0G5NuLYIKtPtaJMTRg-qI?usp=drive_link">genomic tracks for DEGs between female and male samples within social grouped group</a></p>
+<p><a href="https://drive.google.com/drive/folders/1qZ92qN0spLHe23nCOtUvAFTnFiRIa_VZ?usp=drive_link">genomic tracks for DEGs between female and male samples within social isolation group</a></p>
 
 
 </section>
