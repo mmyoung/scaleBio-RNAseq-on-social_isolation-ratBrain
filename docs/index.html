@@ -119,16 +119,30 @@ ul.task-list li input[type="checkbox"] {
 <section id="scalebio-run-on-rat-brain-tissues-from-social-isolation-study" class="level1">
 <h1>ScaleBio run on rat brain tissues from social isolation study</h1>
 <p>Lin Yang</p>
-<section id="project-description" class="level2">
-<h2 class="anchored" data-anchor-id="project-description">Project description</h2>
-<p>Three replicates for female and male rat treated with social isolation and social grouped respectively are included in the experiment. The treatment was exerted from p41-p55. Then, orbitofrontal cortex are dissected from frozen brain tissues and Hang did the nuclei preparation and library preparation with ScaleBio RNA-seq kit.</p>
+</section>
+<section id="project-description" class="level1">
+<h1>Project description</h1>
+<p>Three replicates for female and male rat treated with social isolation and social grouped respectively are included in the experiment. The treatment was exerted from p51-p65. Then, orbitofrontal cortex are dissected from frozen brain tissues and Hang did the nuclei preparation and library preparation with ScaleBio RNA-seq kit.</p>
 <p>The sample loading order on the RT plate are stored at this <a href="https://github.com/mmyoung/scaleBio-RNAseq-on-social_isolation-ratBrain/blob/master/data/9_6_24%2012%20OFC%20for%20ScaleRNA%20yield%20summary.xlsx">spreadsheet</a>.</p>
 <p>A relavant presentation for this project is available at: <a href="https://uchicago.box.com/s/o20tc5qjuk0ekn20dbln4atk9shx8sb1">presentation</a></p>
 </section>
-<section id="data-processing-steps" class="level2">
-<h2 class="anchored" data-anchor-id="data-processing-steps">Data processing steps</h2>
-<section id="data-preprocess" class="level3">
-<h3 class="anchored" data-anchor-id="data-preprocess">data preprocess</h3>
+<section id="prerequisite-for-running-the-pipeline" class="level1">
+<h1>prerequisite for running the pipeline</h1>
+<section id="work-on-midway3-server" class="level2">
+<h2 class="anchored" data-anchor-id="work-on-midway3-server">Work on midway3 server</h2>
+<p>A RCC account is needed to run the job on the server.</p>
+<p><a href="https://rcc-uchicago.github.io/user-guide/">official user guide for RCC server.</a></p>
+</section>
+<section id="environment-setting" class="level2">
+<h2 class="anchored" data-anchor-id="environment-setting">Environment setting</h2>
+<p>Software requirements:</p>
+<p>nextflow, a scalable and reproducible computational pipeline language. This pipeline supports environment management tools including docker or singularity or conda. The corresponding configuration will be pulled or installed based on the environment setting files under /docs folder of scaleRNA-seq repository.</p>
+</section>
+</section>
+<section id="data-processing-steps" class="level1">
+<h1>Data processing steps</h1>
+<section id="data-preprocess" class="level2">
+<h2 class="anchored" data-anchor-id="data-preprocess">data preprocess</h2>
 <p>The library sequencing was ran on Illumina sequencer and demultiplexed by i5 barcode by the sequencing core in UofC. Four .fastq files are returned from the core:</p>
 <ul>
 <li>Undetermined_S0_L002_I1_001.fastq.gz: i7 index</li>
@@ -137,6 +151,7 @@ ul.task-list li input[type="checkbox"] {
 <li>Undetermined_S0_L002_R2_001.fastq.gz: reads2, recording cDNA sequences</li>
 </ul>
 <p>The data preprocessing are implemented with pipeline from ScaleBio with the command:</p>
+<p>SessionInfo: ScaleBio pipeline version 1.5 (https://github.com/ScaleBio/ScaleRna/tree/master)</p>
 <pre><code>module load singularity
 nextflow run /project/zhuzhuzhang/lyang/software/ScaleRna/ -params-file runParams.yml -profile singularity --outDir /project/zhuzhuzhang/lyang/scaleBio_RNA_rat_brain/out_mRatBN —-splitFastq true</code></pre>
 <p><strong>inputs:</strong></p>
@@ -144,13 +159,13 @@ nextflow run /project/zhuzhuzhang/lyang/software/ScaleRna/ -params-file runParam
 <p><strong>outputs:</strong></p>
 <p>quality control (/project/zhuzhuzhang/lyang/scaleBio_RNA_rat_brain/out_mRatBN/samples)</p>
 <p>cell by feature matrix (/project/zhuzhuzhang/lyang/scaleBio_RNA_rat_brain/out_mRatBN/alignment)</p>
-</section>
 <section id="cell-clustering" class="level3">
 <h3 class="anchored" data-anchor-id="cell-clustering">cell clustering</h3>
 <p><a href="cell_clustering.html">Cell clustering was perform in R with Seurat package</a></p>
 </section>
-<section id="marker-gene-indentification-in-each-cluster-and-cell-type-annotation" class="level3">
-<h3 class="anchored" data-anchor-id="marker-gene-indentification-in-each-cluster-and-cell-type-annotation">Marker gene indentification in each cluster and cell type annotation</h3>
+</section>
+<section id="marker-gene-indentification-in-each-cluster-and-cell-type-annotation" class="level2">
+<h2 class="anchored" data-anchor-id="marker-gene-indentification-in-each-cluster-and-cell-type-annotation">Marker gene indentification in each cluster and cell type annotation</h2>
 <p>Marker genes in each cluster are identified with <code>FindAllmarker</code> function in Seurat. The top 10 genes are saved and manually compared with the database to annotate the cell types for each cluster.</p>
 <p><a href="cluster_annotation.html"><strong>script</strong></a></p>
 <p><strong>outputs:</strong></p>
@@ -158,30 +173,30 @@ nextflow run /project/zhuzhuzhang/lyang/software/ScaleRna/ -params-file runParam
 <p><a href="https://drive.google.com/file/d/1xW9gSP3w7PrulhY3mcOuhQFS0VB0sfg1/view?usp=drive_link">The umap projections of expression marker gene.</a></p>
 <p><a href="https://docs.google.com/spreadsheets/d/17Y31mBy9B0aljy72LLnAPNpoxCN6zZLhlXBFzCg-awM/edit?usp=drive_link">Cell type annotation gene list.</a></p>
 </section>
-<section id="differential-expression-analysis-between-social-isolation-and-social-grouped-samples" class="level3">
-<h3 class="anchored" data-anchor-id="differential-expression-analysis-between-social-isolation-and-social-grouped-samples">differential expression analysis between social isolation and social grouped samples</h3>
+<section id="differential-expression-analysis-between-social-isolation-and-social-grouped-samples" class="level2">
+<h2 class="anchored" data-anchor-id="differential-expression-analysis-between-social-isolation-and-social-grouped-samples">differential expression analysis between social isolation and social grouped samples</h2>
 <p>The comparison are based on pseudobulk expression of each cell type in each sample.</p>
 <p><a href="DEG_analysis_iso_vs_soc.html"><strong>script</strong></a></p>
 <p><strong>outputs:</strong></p>
 <p><a href="https://drive.google.com/file/d/1WzTyDMGrbLhniw3PyvdQhK68E4gdXiCn/view?usp=drive_link">DEG counts in each cell type between iso and soc groups</a></p>
 <p><a href="https://drive.google.com/drive/folders/1vyPnJ4aQlVgrAcMo2c_cSNqdUHIiz79B?usp=drive_link">gene lists from the DEG analysis and filtered significantly differentially expressed genes with criteria: adjusted.p&lt;0.05 &amp; |log2FC|&gt;0.3</a></p>
 </section>
-<section id="visualization-on-the-degs-between-social-isolation-and-social-grouped-comparison" class="level3">
-<h3 class="anchored" data-anchor-id="visualization-on-the-degs-between-social-isolation-and-social-grouped-comparison">visualization on the DEGs between social isolation and social grouped comparison</h3>
+<section id="visualization-on-the-degs-between-social-isolation-and-social-grouped-comparison" class="level2">
+<h2 class="anchored" data-anchor-id="visualization-on-the-degs-between-social-isolation-and-social-grouped-comparison">visualization on the DEGs between social isolation and social grouped comparison</h2>
 <p><a href="iso_vs_soc_DEG_visualization.html"><strong>script</strong></a></p>
 <p><strong>outputs:</strong></p>
 <p><a href="https://drive.google.com/file/d/1OiL4bKcFYW8W-O-f-YtGFc5CgXv-2OYP/view?usp=drive_link">heatmap for log2FC of DEGs in iso&amp;soc comparison</a></p>
 <p><a href="https://drive.google.com/file/d/12bkUK9wwWnwjBqQUuQmsxsbzI_nVF-8V/view?usp=drive_link">Violin plots of DEG expression in iso and soc groups</a></p>
 <p><a href="https://drive.google.com/file/d/1XUcQwIZnNIeu8fGhCLbE9HwYXYf-RSao/view?usp=drive_link">umap projecting the expression level of DEGs in each cell</a></p>
 </section>
-<section id="differential-expression-analysis-between-female-and-male-samples-with-social-isolation-and-social-grouped-groups" class="level3">
-<h3 class="anchored" data-anchor-id="differential-expression-analysis-between-female-and-male-samples-with-social-isolation-and-social-grouped-groups">differential expression analysis between female and male samples with social isolation and social grouped groups</h3>
+<section id="differential-expression-analysis-between-female-and-male-samples-with-social-isolation-and-social-grouped-groups" class="level2">
+<h2 class="anchored" data-anchor-id="differential-expression-analysis-between-female-and-male-samples-with-social-isolation-and-social-grouped-groups">differential expression analysis between female and male samples with social isolation and social grouped groups</h2>
 <p><a href="DEG_analysis_F_vs_M.html"><strong>script</strong></a></p>
 <p><strong>outputs:</strong></p>
 <p><a href="https://drive.google.com/drive/folders/1R0_wEIfob2jwujwN7ijTYtl6ExWU-4Sz?usp=drive_link">gene lists from the DEG analysis and filtered significantly differentially expressed genes with criteria: adjusted.p&lt;0.05 &amp; |log2FC|&gt;0.3</a></p>
 </section>
-<section id="visualization-on-the-degs-between-female-and-male-comparison" class="level3">
-<h3 class="anchored" data-anchor-id="visualization-on-the-degs-between-female-and-male-comparison">visualization on the DEGs between female and male comparison</h3>
+<section id="visualization-on-the-degs-between-female-and-male-comparison" class="level2">
+<h2 class="anchored" data-anchor-id="visualization-on-the-degs-between-female-and-male-comparison">visualization on the DEGs between female and male comparison</h2>
 <p><a href="sex_DEG_plot.html"><strong>script</strong></a></p>
 <p><strong>outputs:</strong></p>
 <p>heatmaps:</p>
@@ -193,8 +208,8 @@ nextflow run /project/zhuzhuzhang/lyang/software/ScaleRna/ -params-file runParam
 <p><a href="https://drive.google.com/file/d/1GnPFiDTRAboEHK_34HY5XSBzRK9bS01T/view?usp=drive_link">violin plot of gene expression of DEGs between F&amp;M comparison in soc group</a></p>
 <p><a href="https://drive.google.com/file/d/1elizpJDO6-6KoptOsUv8xzSR96Oi7R4r/view?usp=drive_link">violin plot of gene expression of DEGs between F&amp;M comparison in iso group</a></p>
 </section>
-<section id="genomic-track-visualization" class="level3">
-<h3 class="anchored" data-anchor-id="genomic-track-visualization">genomic track visualization</h3>
+<section id="genomic-track-visualization" class="level2">
+<h2 class="anchored" data-anchor-id="genomic-track-visualization">genomic track visualization</h2>
 <p>steps involved:</p>
 <ul>
 <li><p><a href="https://github.com/mmyoung/scaleBio-RNAseq-on-social_isolation-ratBrain/blob/master/script/workflow.sh">split the integrated .bam files into individual cell based on the barcode information</a></p></li>
@@ -209,7 +224,6 @@ nextflow run /project/zhuzhuzhang/lyang/software/ScaleRna/ -params-file runParam
 <p><a href="https://drive.google.com/drive/folders/1qZ92qN0spLHe23nCOtUvAFTnFiRIa_VZ?usp=drive_link">genomic tracks for DEGs between female and male samples within social isolation group</a></p>
 
 
-</section>
 </section>
 </section>
 

@@ -5,15 +5,30 @@ toc: false
 # ScaleBio run on rat brain tissues from social isolation study
 Lin Yang
 
-## Project description
-Three replicates for female and male rat treated with social isolation and social grouped respectively are included in the experiment. The treatment was exerted from p41-p55. Then, orbitofrontal cortex are dissected from frozen brain tissues and Hang did the nuclei preparation and library preparation with ScaleBio RNA-seq kit.
+# Project description
+Three replicates for female and male rat treated with social isolation and social grouped respectively are included in the experiment. The treatment was exerted from p51-p65. Then, orbitofrontal cortex are dissected from frozen brain tissues and Hang did the nuclei preparation and library preparation with ScaleBio RNA-seq kit.
 
 The sample loading order on the RT plate are stored at this [spreadsheet](https://github.com/mmyoung/scaleBio-RNAseq-on-social_isolation-ratBrain/blob/master/data/9_6_24 12 OFC for ScaleRNA yield summary.xlsx).
 
 A relavant presentation for this project is available at: [presentation](https://uchicago.box.com/s/o20tc5qjuk0ekn20dbln4atk9shx8sb1)
 
-## Data processing steps
-### data preprocess
+# prerequisite for running the pipeline
+
+## Work on midway3 server
+
+A RCC account is needed to run the job on the server.
+
+[official user guide for RCC server.](https://rcc-uchicago.github.io/user-guide/)
+
+## Environment setting
+
+Software requirements: 
+
+nextflow, a scalable and reproducible computational pipeline language.
+This pipeline supports environment management tools including docker or singularity or conda. The corresponding configuration will be pulled or installed based on the environment setting files under /docs folder of scaleRNA-seq repository.
+
+# Data processing steps
+## data preprocess
 
 The library sequencing was ran on Illumina sequencer and demultiplexed by i5 barcode by the sequencing core in UofC.
 Four .fastq files are returned from the core: 
@@ -24,6 +39,9 @@ Four .fastq files are returned from the core:
 * Undetermined_S0_L002_R2_001.fastq.gz: reads2, recording cDNA sequences
 
 The data preprocessing are implemented with pipeline from ScaleBio with the command:
+
+SessionInfo: 
+ScaleBio pipeline version 1.5 (https://github.com/ScaleBio/ScaleRna/tree/master)
 
 ```
 module load singularity
@@ -44,7 +62,7 @@ cell by feature matrix (/project/zhuzhuzhang/lyang/scaleBio_RNA_rat_brain/out_mR
 
 [Cell clustering was perform in R with Seurat package](cell_clustering.html)
 
-### Marker gene indentification in each cluster and cell type annotation
+## Marker gene indentification in each cluster and cell type annotation
 
 Marker genes in each cluster are identified with `FindAllmarker` function in Seurat. The top 10 genes are saved and manually compared with the database to annotate the cell types for each cluster.
 
@@ -58,7 +76,7 @@ Marker genes in each cluster are identified with `FindAllmarker` function in Seu
 
 [Cell type annotation gene list.](https://docs.google.com/spreadsheets/d/17Y31mBy9B0aljy72LLnAPNpoxCN6zZLhlXBFzCg-awM/edit?usp=drive_link)
 
-### differential expression analysis between social isolation and social grouped samples
+## differential expression analysis between social isolation and social grouped samples
 
 The comparison are based on pseudobulk expression of each cell type in each sample.
 
@@ -71,7 +89,7 @@ The comparison are based on pseudobulk expression of each cell type in each samp
 [gene lists from the DEG analysis and filtered significantly differentially expressed genes with criteria: adjusted.p<0.05 & |log2FC|>0.3](https://drive.google.com/drive/folders/1vyPnJ4aQlVgrAcMo2c_cSNqdUHIiz79B?usp=drive_link)
 
 
-### visualization on the DEGs between social isolation and social grouped comparison
+## visualization on the DEGs between social isolation and social grouped comparison
 
 [**script**](iso_vs_soc_DEG_visualization.html)
 
@@ -83,7 +101,7 @@ The comparison are based on pseudobulk expression of each cell type in each samp
 
 [umap projecting the expression level of DEGs in each cell](https://drive.google.com/file/d/1XUcQwIZnNIeu8fGhCLbE9HwYXYf-RSao/view?usp=drive_link)
 
-### differential expression analysis between female and male samples with social isolation and social grouped groups
+## differential expression analysis between female and male samples with social isolation and social grouped groups
 
 [**script**](DEG_analysis_F_vs_M.html)
 
@@ -92,7 +110,7 @@ The comparison are based on pseudobulk expression of each cell type in each samp
 [gene lists from the DEG analysis and filtered significantly differentially expressed genes with criteria: adjusted.p<0.05 & |log2FC|>0.3](https://drive.google.com/drive/folders/1R0_wEIfob2jwujwN7ijTYtl6ExWU-4Sz?usp=drive_link)
 
 
-### visualization on the DEGs between female and male comparison
+## visualization on the DEGs between female and male comparison
 
 [**script**](sex_DEG_plot.html)
 
@@ -114,7 +132,7 @@ violin plot:
 
 [violin plot of gene expression of DEGs between F&M comparison in iso group](https://drive.google.com/file/d/1elizpJDO6-6KoptOsUv8xzSR96Oi7R4r/view?usp=drive_link)
 
-### genomic track visualization 
+## genomic track visualization 
 
 steps involved:
 

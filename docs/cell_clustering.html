@@ -191,20 +191,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>library(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="3a15457c-745f-4a9b-a469-ef30a0a747e5" class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>seurat_obj_ls <span class="op">&lt;-</span> </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    lapply(c(<span class="st">'iso-F-04'</span>,<span class="st">'iso-F-22'</span>,<span class="st">'iso-F-35'</span>,<span class="st">'iso-M-00'</span>,<span class="st">'iso-M-23'</span>,<span class="st">'iso-M-40'</span>,<span class="st">'soc-F-05'</span>,<span class="st">'soc-F-24'</span>,<span class="st">'soc-F-36'</span>,<span class="st">'soc-M-01'</span>,<span class="st">'soc-M-25'</span>,<span class="st">'soc-M-41'</span>),</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>       function(x){</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>           cell.use <span class="op">&lt;-</span> read.csv(paste0(<span class="st">"./samples/"</span>,x,<span class="st">".Rat.allCells.csv"</span>))<span class="op">%&gt;%</span> </span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>            <span class="bu">filter</span>(<span class="cf">pass</span><span class="op">==</span><span class="st">"True"</span>) <span class="op">%&gt;%</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>            pull(X)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        Read10X(paste0(<span class="st">"alignment/"</span>,x,<span class="st">".Rat/"</span>,x,<span class="st">".Rat.star.solo/GeneFull_Ex50pAS/raw/"</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>           CreateSeuratObject(project <span class="op">=</span> <span class="st">"Rat"</span>, <span class="bu">min</span>.cells <span class="op">=</span> <span class="dv">3</span>, <span class="bu">min</span>.features <span class="op">=</span> <span class="dv">200</span>) <span class="op">%&gt;%</span>       </span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>            subset(cells <span class="op">=</span> cell.use)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>           })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">## load gene by cell matrices from all samples into individual seurat objects</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>seurat_obj_ls <span class="op">&lt;-</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    lapply(c(<span class="st">'iso-F-04'</span>,<span class="st">'iso-F-22'</span>,<span class="st">'iso-F-35'</span>,<span class="st">'iso-M-00'</span>,<span class="st">'iso-M-23'</span>,<span class="st">'iso-M-40'</span>,<span class="st">'soc-F-05'</span>,<span class="st">'soc-F-24'</span>,<span class="st">'soc-F-36'</span>,<span class="st">'soc-M-01'</span>,<span class="st">'soc-M-25'</span>,<span class="st">'soc-M-41'</span>),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>       function(x){</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>           cell.use <span class="op">&lt;-</span> read.csv(paste0(<span class="st">"./samples/"</span>,x,<span class="st">".Rat.allCells.csv"</span>))<span class="op">%&gt;%</span> </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>            <span class="bu">filter</span>(<span class="cf">pass</span><span class="op">==</span><span class="st">"True"</span>) <span class="op">%&gt;%</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>            pull(X)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        Read10X(paste0(<span class="st">"alignment/"</span>,x,<span class="st">".Rat/"</span>,x,<span class="st">".Rat.star.solo/GeneFull_Ex50pAS/raw/"</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>           CreateSeuratObject(project <span class="op">=</span> <span class="st">"Rat"</span>, <span class="bu">min</span>.cells <span class="op">=</span> <span class="dv">3</span>, <span class="bu">min</span>.features <span class="op">=</span> <span class="dv">200</span>) <span class="op">%&gt;%</span>       </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>            subset(cells <span class="op">=</span> cell.use)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>           })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="a1c13834-c892-4e19-934f-14fce87b360a" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Seurat_merged <span class="op">&lt;-</span> merge(seurat_obj_ls[[<span class="dv">1</span>]],seurat_obj_ls[<span class="op">-</span><span class="dv">1</span>],project<span class="op">=</span><span class="st">"Rat"</span>,</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                       add.cell.ids <span class="op">=</span>c(<span class="st">'iso-F-04'</span>,<span class="st">'iso-F-22'</span>,<span class="st">'iso-F-35'</span>,<span class="st">'iso-M-00'</span>,<span class="st">'iso-M-23'</span>,<span class="st">'iso-M-40'</span>,<span class="st">'soc-F-05'</span>,<span class="st">'soc-F-24'</span>,<span class="st">'soc-F-36'</span>,<span class="st">'soc-M-01'</span>,<span class="st">'soc-M-25'</span>,<span class="st">'soc-M-41'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">## merge all individual objects into one</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>Seurat_merged <span class="op">&lt;-</span> merge(seurat_obj_ls[[<span class="dv">1</span>]],seurat_obj_ls[<span class="op">-</span><span class="dv">1</span>],project<span class="op">=</span><span class="st">"Rat"</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                       add.cell.ids <span class="op">=</span>c(<span class="st">'iso-F-04'</span>,<span class="st">'iso-F-22'</span>,<span class="st">'iso-F-35'</span>,<span class="st">'iso-M-00'</span>,<span class="st">'iso-M-23'</span>,<span class="st">'iso-M-40'</span>,<span class="st">'soc-F-05'</span>,<span class="st">'soc-F-24'</span>,<span class="st">'soc-F-36'</span>,<span class="st">'soc-M-01'</span>,<span class="st">'soc-M-25'</span>,<span class="st">'soc-M-41'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="f18ba525" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Seurat_merged</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -249,7 +251,8 @@ Active assay: RNA (26597 features, 0 variable features)
 </div>
 </div>
 <div id="18f85702-c5bd-4346-8c8e-008a39caba07" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>obj <span class="op">&lt;-</span> subset(Seurat_merged, subset <span class="op">=</span> nFeature_RNA <span class="op">&gt;</span> <span class="dv">200</span> <span class="op">&amp;</span> nFeature_RNA <span class="op">&lt;</span> <span class="dv">4000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">## filter cells with detected gene number between 200 and 4000</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>obj <span class="op">&lt;-</span> subset(Seurat_merged, subset <span class="op">=</span> nFeature_RNA <span class="op">&gt;</span> <span class="dv">200</span> <span class="op">&amp;</span> nFeature_RNA <span class="op">&lt;</span> <span class="dv">4000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="22ba08c2-ed21-4d97-be1b-7076164f6930" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>obj</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -263,11 +266,13 @@ Active assay: RNA (26597 features, 0 variable features)
 <section id="normalizing-the-data" class="level2">
 <h2 class="anchored" data-anchor-id="normalizing-the-data">Normalizing the data</h2>
 <div id="f2c233ef-d34b-4d4a-a200-d1a9eb9d8c9c" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>obj <span class="op">&lt;-</span> SCTransform(obj, vst.flavor <span class="op">=</span> <span class="st">'v2'</span>, verbose <span class="op">=</span> FALSE) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">## using SCTransform to normalize the gene counts</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>obj <span class="op">&lt;-</span> SCTransform(obj, vst.flavor <span class="op">=</span> <span class="st">'v2'</span>, verbose <span class="op">=</span> FALSE) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="340f325c-8f89-4110-a66c-61551c39eb21" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>obj <span class="op">&lt;-</span> obj <span class="op">%&gt;%</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    RunPCA(npcs <span class="op">=</span> <span class="dv">30</span>, verbose <span class="op">=</span> FALSE,features <span class="op">=</span> VariableFeatures(<span class="bu">object</span> <span class="op">=</span> obj))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Run PCA dimention reduction on the normalized counts</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>obj <span class="op">&lt;-</span> obj <span class="op">%&gt;%</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    RunPCA(npcs <span class="op">=</span> <span class="dv">30</span>, verbose <span class="op">=</span> FALSE,features <span class="op">=</span> VariableFeatures(<span class="bu">object</span> <span class="op">=</span> obj))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="4997d177-8f8e-4836-96b7-58fcfd9a5386" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>VizDimLoadings(obj, dims <span class="op">=</span> <span class="dv">1</span>:<span class="dv">2</span>, reduction <span class="op">=</span> <span class="st">"pca"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -316,17 +321,18 @@ Active assay: SCT (25518 features, 3000 variable features)
 </div>
 </div>
 <div id="6f31334b-362b-4353-889e-2e9fe064ff95" class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>obj <span class="op">&lt;-</span> AddMetaData(</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">object</span> <span class="op">=</span> obj,</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  metadata <span class="op">=</span> stringr::str_split(row.names(obj<span class="op">@</span>meta.data),<span class="st">"-"</span>,simplify<span class="op">=</span>T)[,<span class="dv">1</span>],</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  col.name <span class="op">=</span> <span class="st">'group'</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>obj <span class="op">&lt;-</span> AddMetaData(</span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="bu">object</span> <span class="op">=</span> obj,</span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  metadata <span class="op">=</span> stringr::str_split(row.names(obj<span class="op">@</span>meta.data),<span class="st">"-"</span>,simplify<span class="op">=</span>T)[,<span class="dv">2</span>],</span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  col.name <span class="op">=</span> <span class="st">'sex'</span></span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">## add the group and sex information of each cell in the metadata</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>obj <span class="op">&lt;-</span> AddMetaData(</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">object</span> <span class="op">=</span> obj,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  metadata <span class="op">=</span> stringr::str_split(row.names(obj<span class="op">@</span>meta.data),<span class="st">"-"</span>,simplify<span class="op">=</span>T)[,<span class="dv">1</span>],</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  col.name <span class="op">=</span> <span class="st">'group'</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>obj <span class="op">&lt;-</span> AddMetaData(</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  <span class="bu">object</span> <span class="op">=</span> obj,</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  metadata <span class="op">=</span> stringr::str_split(row.names(obj<span class="op">@</span>meta.data),<span class="st">"-"</span>,simplify<span class="op">=</span>T)[,<span class="dv">2</span>],</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  col.name <span class="op">=</span> <span class="st">'sex'</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="4d9f614f-e9f4-4fd4-af38-e73dd7217c7e" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>head(obj<span class="op">@</span>meta.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -429,10 +435,11 @@ Active assay: SCT (25518 features, 3000 variable features)
 </div>
 </div>
 <div id="d9428cd5-4385-491d-b259-74143285b4f5" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>obj <span class="op">&lt;-</span> obj <span class="op">%&gt;%</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>        FindNeighbors(reduction <span class="op">=</span> <span class="st">"pca"</span>, dims <span class="op">=</span> <span class="dv">1</span>:<span class="dv">15</span>, verbose <span class="op">=</span> FALSE) <span class="op">%&gt;%</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>        FindClusters(resolution <span class="op">=</span> <span class="fl">0.7</span>, verbose <span class="op">=</span> FALSE) <span class="op">%&gt;%</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>        RunUMAP(reduction <span class="op">=</span> <span class="st">"pca"</span>, dims <span class="op">=</span> <span class="dv">1</span>:<span class="dv">15</span>, verbose <span class="op">=</span> FALSE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">## run cell clustering with the first 15 PCs</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>obj <span class="op">&lt;-</span> obj <span class="op">%&gt;%</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>        FindNeighbors(reduction <span class="op">=</span> <span class="st">"pca"</span>, dims <span class="op">=</span> <span class="dv">1</span>:<span class="dv">15</span>, verbose <span class="op">=</span> FALSE) <span class="op">%&gt;%</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>        FindClusters(resolution <span class="op">=</span> <span class="fl">0.7</span>, verbose <span class="op">=</span> FALSE) <span class="op">%&gt;%</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>        RunUMAP(reduction <span class="op">=</span> <span class="st">"pca"</span>, dims <span class="op">=</span> <span class="dv">1</span>:<span class="dv">15</span>, verbose <span class="op">=</span> FALSE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="625b1c9f-26f2-49f1-8d6c-0c457cf3c3d2" class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>obj</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -446,10 +453,11 @@ Active assay: SCT (25518 features, 3000 variable features)
 </div>
 </div>
 <div id="876102c6-6144-481b-bdfc-c6c1d77df035" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="23">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>options(<span class="bu">repr</span>.plot.width <span class="op">=</span> <span class="dv">7</span>, <span class="bu">repr</span>.plot.height <span class="op">=</span> <span class="dv">5</span>, <span class="bu">repr</span>.plot.res <span class="op">=</span> <span class="dv">300</span>)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co"># note that you can set `label = TRUE` or use the LabelClusters function to help label</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co"># individual clusters</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>DimPlot(obj, reduction <span class="op">=</span> <span class="st">"umap"</span>,label <span class="op">=</span> TRUE, repel <span class="op">=</span> TRUE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">## umap plot</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>options(<span class="bu">repr</span>.plot.width <span class="op">=</span> <span class="dv">7</span>, <span class="bu">repr</span>.plot.height <span class="op">=</span> <span class="dv">5</span>, <span class="bu">repr</span>.plot.res <span class="op">=</span> <span class="dv">300</span>)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co"># note that you can set `label = TRUE` or use the LabelClusters function to help label</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co"># individual clusters</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>DimPlot(obj, reduction <span class="op">=</span> <span class="st">"umap"</span>,label <span class="op">=</span> TRUE, repel <span class="op">=</span> TRUE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -461,6 +469,7 @@ Active assay: SCT (25518 features, 3000 variable features)
 </section>
 <section id="define-doublet" class="level2">
 <h2 class="anchored" data-anchor-id="define-doublet">define doublet</h2>
+<p>remove the doublets with DoubleFinder</p>
 <div id="23985340-8bed-44bf-8ee0-071345070034" class="cell" data-scrolled="true">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>library(<span class="st">'DoubletFinder'</span>)</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -787,6 +796,7 @@ Active assay: SCT (25518 features, 3000 variable features)
 </table>
 </div>
 </div>
+<p>Add substitutional sample name to metadata</p>
 <div id="943b1c92-3c07-44e4-ad9d-da6da99e8ae7" class="cell" data-execution_count="39">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>seu_obj<span class="op">@</span>meta.data$sampleID <span class="op">&lt;-</span> str_split(row.names(seu_obj<span class="op">@</span>meta.data),<span class="st">"_"</span>,simplify <span class="op">=</span> T)[,<span class="dv">1</span>]</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>seu_obj<span class="op">@</span>meta.data <span class="op">&lt;-</span> </span>

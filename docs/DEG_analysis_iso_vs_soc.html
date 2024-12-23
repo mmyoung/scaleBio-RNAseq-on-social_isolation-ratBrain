@@ -303,10 +303,11 @@ Active assay: RNA (26597 features, 0 variable features)
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>pseudo_de <span class="op">&lt;-</span> <span class="bu">list</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="77e06743-504e-4d72-8dfb-0db28b96f831" class="cell" data-scrolled="true">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>bulk.L5IT.de.L5IT <span class="op">&lt;-</span> FindMarkers(<span class="bu">object</span> <span class="op">=</span> pseudo_seu, </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                         ident<span class="fl">.1</span> <span class="op">=</span> <span class="st">"L5 IT_iso"</span>, </span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                         ident<span class="fl">.2</span> <span class="op">=</span> <span class="st">"L5 IT_soc"</span>,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                         test.use <span class="op">=</span> <span class="st">"DESeq2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">## FindMarkers function is used to identify the differential epxression genes</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>bulk.L5IT.de.L5IT <span class="op">&lt;-</span> FindMarkers(<span class="bu">object</span> <span class="op">=</span> pseudo_seu, </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                         ident<span class="fl">.1</span> <span class="op">=</span> <span class="st">"L5 IT_iso"</span>, </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                         ident<span class="fl">.2</span> <span class="op">=</span> <span class="st">"L5 IT_soc"</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>                         test.use <span class="op">=</span> <span class="st">"DESeq2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="3b4d8239-c415-4c6f-bfe3-4ce83d729631" class="cell" data-execution_count="38">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>head(bulk.L5IT.de.L5IT)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
