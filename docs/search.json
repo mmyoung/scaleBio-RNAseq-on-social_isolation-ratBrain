@@ -88,7 +88,7 @@
     "href": "index.html#environment-setting",
     "title": "ScaleBio run on rat brain tissues from social isolation study",
     "section": "Environment setting",
-    "text": "Environment setting\nSoftware requirements:\nnextflow, a scalable and reproducible computational pipeline language. This pipeline supports environment management tools including docker or singularity or conda. The corresponding configuration will be pulled or installed based on the environment setting files under /docs folder of scaleRNA-seq repository."
+    "text": "Environment setting\nSoftware requirements:\nnextflow, a scalable and reproducible computational pipeline language.\nThis pipeline supports environment management tools including docker or singularity or conda. The corresponding configuration will be pulled or installed based on the environment setting files under /docs folder of scaleRNA-seq repository."
   },
   {
     "objectID": "index.html#data-preprocess",

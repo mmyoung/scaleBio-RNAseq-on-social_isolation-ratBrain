@@ -12,6 +12,7 @@ The sample loading order on the RT plate are stored at this [spreadsheet](https:
 
 A relavant presentation for this project is available at: [presentation](https://uchicago.box.com/s/o20tc5qjuk0ekn20dbln4atk9shx8sb1)
 
+
 # prerequisite for running the pipeline
 
 ## Work on midway3 server
@@ -25,6 +26,7 @@ A RCC account is needed to run the job on the server.
 Software requirements: 
 
 nextflow, a scalable and reproducible computational pipeline language.
+
 This pipeline supports environment management tools including docker or singularity or conda. The corresponding configuration will be pulled or installed based on the environment setting files under /docs folder of scaleRNA-seq repository.
 
 # Data processing steps
