@@ -25,7 +25,7 @@ A RCC account is needed to run the job on the server.
 
 Software requirements: 
 
-nextflow, a scalable and reproducible computational pipeline language.
+[nextflow](https://www.nextflow.io/docs/latest/install.html), a scalable and reproducible computational pipeline language.
 
 This pipeline supports environment management tools including docker or singularity or conda. The corresponding configuration will be pulled or installed based on the environment setting files under /docs folder of scaleRNA-seq repository.
 
@@ -36,23 +36,31 @@ The library sequencing was ran on Illumina sequencer and demultiplexed by i5 bar
 Four .fastq files are returned from the core: 
 
 * Undetermined_S0_L002_I1_001.fastq.gz: i7 index
-* Undetermined_S0_L002_I2_001.fastq.gz: i5 index
+* Undetermined_S0_L002_I2_001.fastq.gz: i5 index (optional)
 * Undetermined_S0_L002_R1_001.fastq.gz: reads1, recording barcode sequences
 * Undetermined_S0_L002_R2_001.fastq.gz: reads2, recording cDNA sequences
+
+**Notes: the .fastq file names need to follow the pattern: libName_sample#_Lane#_R1/R2/I1/I2_*.fastq.gz,with R1/R2/I1/I2 indicating the file features.**
 
 The data preprocessing are implemented with pipeline from ScaleBio with the command:
 
 SessionInfo: 
 ScaleBio pipeline version 1.5 (https://github.com/ScaleBio/ScaleRna/tree/master)
 
+**inputs:**
+
+[runParams.yml](https://github.com/mmyoung/scaleBio-RNAseq-on-social_isolation-ratBrain/blob/master/script/runParams.yml)
+
+Required arguments in the parameter file:
+* fastqDir: the path of folder storing all fastq files.
+* samples: the sample RT barcode information, a comma delimited csv file with at least 3 columns: sample, barcodes and libName.
+* genome: the path to the genome index.
+* libStructure: the structures of the library, specificly, the position and length of each barcodes.
+
 ```
 module load singularity
 nextflow run /project/zhuzhuzhang/lyang/software/ScaleRna/ -params-file runParams.yml -profile singularity --outDir /project/zhuzhuzhang/lyang/scaleBio_RNA_rat_brain/out_mRatBN —-splitFastq true
 ```
-
-**inputs:**
-
-[runParams.yml](https://github.com/mmyoung/scaleBio-RNAseq-on-social_isolation-ratBrain/blob/master/script/runParams.yml)
 
 **outputs:**
 
